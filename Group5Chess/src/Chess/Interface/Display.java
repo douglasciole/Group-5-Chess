@@ -12,47 +12,28 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 
 public class Display {
-    JFrame appFrame;
-    JTextPane screen = new JTextPane();
+    JFrame appFrame = new JFrame("Groupe 5 Chess");
+    Screen screen = new Screen();
 
-    private void configScreen() {
-        SimpleAttributeSet set = new SimpleAttributeSet();
-        StyleConstants.setLineSpacing(set, .4f);
-        StyleConstants.setAlignment(set, StyleConstants.ALIGN_CENTER);
-
-        screen.setBorder(new EmptyBorder(40, 0, 0, 0));
-        screen.setHighlighter(null);
-        screen.setBackground(Config.screenColor);
-        screen.setParagraphAttributes(set, false);
-        screen.setFont(Config.font);
-        screen.setEditable(false);
-    }
-
-    public Display() {
-        appFrame = new JFrame("Groupe 5 Chess");
-        Container content = appFrame.getContentPane();
-        Container topContainer = Box.createHorizontalBox();
-
-
-        //Change Aparence of display
-        configScreen();
-
-        topContainer.add(screen);
-
-        content.add(topContainer, BorderLayout.NORTH);
-        content.add(new JButton("This is a JButton"), BorderLayout.SOUTH);
-
+    private void setupFrame() {
         appFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         appFrame.setResizable(false);
         appFrame.setSize(Config.boardDimentions[0],Config.boardDimentions[1]);
         appFrame.setVisible(true);
+    }
 
+    public Display() {
+        Container content = appFrame.getContentPane();
+        Container topContainer = Box.createHorizontalBox();
+        topContainer.add(screen);
+
+        content.add(topContainer, BorderLayout.NORTH);
+        content.add(new JTextField(""), BorderLayout.SOUTH);
+
+        setupFrame();
     }
 
     public void draw(String t) {
-        screen.setText(t+"\n"+
-                "♔ Player 1 \n[]\n"+
-                "♚ Player 2 \n[]"
-        );
+        screen.setText(t);
     }
 }
