@@ -20,18 +20,22 @@ public class Square {
         this.p = p;
     }
 
+    public void changePiece(Piece p) {
+        this.p = p;
+    }
+
     public boolean isEmpty() {
         return (p == null);
     }
 
-    public void drawTile() {
+    public String drawTile() {
         if (isEmpty()) {
             int selectedTile = ((col % 2 == 0) ? 0 : 1);
             if (row % 2 != 0)
                 selectedTile = ((selectedTile == 0) ? 1 : 0);
-            System.out.print(shape[selectedTile] + Config.spacing);
+            return shape[selectedTile] + Config.spacing;
         }else {
-            System.out.print(p.toString() + Config.spacing);
+            return p.toString() + Config.spacing;
         }
     }
 
@@ -39,15 +43,12 @@ public class Square {
         return row;
     }
 
-    public void setRow(int row) {
-        this.row = row;
-    }
-
     public int getCol() {
         return col;
     }
 
-    public void setCol(int col) {
-        this.col = col;
+    public Piece getPiece() {
+        return p;
     }
+
 }

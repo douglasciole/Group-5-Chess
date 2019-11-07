@@ -8,14 +8,14 @@ import java.util.Map;
  * characters source: https://jrgraphix.net/r/Unicode/25A0-25FF
  */
 public class Board {
-    Map<String, Square> grid = new Hashtable<>();
+    private Map<String, Square> grid = new Hashtable<>();
 
-    private void drawLetters() {
-        System.out.printf("%s"+Config.letters.charAt(0)+"%s"+Config.letters.charAt(1)+"%s"+Config.letters.charAt(2)+"%s"+Config.letters.charAt(3)+"%s"+Config.letters.charAt(4)+"%s"+Config.letters.charAt(5)+"%s"+Config.letters.charAt(6)+"%s"+Config.letters.charAt(7)+"%s\n", Config.spacing+" ", Config.spacing, Config.spacing, Config.spacing, Config.spacing, Config.spacing, Config.spacing, Config.spacing, Config.spacing);
+    private String drawLetters() {
+        return String.format(Config.letters.charAt(0)+"%s"+Config.letters.charAt(1)+"%s"+Config.letters.charAt(2)+"%s"+Config.letters.charAt(3)+"%s"+Config.letters.charAt(4)+"%s"+Config.letters.charAt(5)+"%s"+Config.letters.charAt(6)+"%s"+Config.letters.charAt(7)+"%s\n", Config.spacing, Config.spacing, Config.spacing, Config.spacing, Config.spacing, Config.spacing, Config.spacing, Config.spacing);
     }
 
-    private void drawNumbers(int i) {
-        System.out.print(1 + i + Config.spacing);
+    private String drawNumbers(int i) {
+        return 1 + i + Config.spacing;
     }
 
     private void setUpWhite() {
@@ -58,6 +58,10 @@ public class Board {
         grid.put("h8", new Square(7, 7, new Rook(false)));
     }
 
+    public void movePiece(String from, String to) {
+        grid.get(to).changePiece(grid.get(from).getPiece());
+        grid.get(from).changePiece(null);
+    }
 
     public Board() {
 
@@ -71,20 +75,23 @@ public class Board {
         setUpBlack();
     }
 
-    public void draw() {
-        drawLetters();
+    public String draw() {
+        String boardDisplay = "";
+
+        boardDisplay += drawLetters();
 
         for (int i = 7; i >= 0; i--) {
-            drawNumbers(i);
+            boardDisplay += drawNumbers(i);
 
             for (int j = 0; j < 8; j++) {
-                grid.get(Config.letters.charAt(j)+""+(i+1)).drawTile();
+                boardDisplay += grid.get(Config.letters.charAt(j)+""+(i+1)).drawTile();
             }
 
-            drawNumbers(i);
-            System.out.println("");
+            boardDisplay += drawNumbers(i) + "\n";
         }
 
-        drawLetters();
+        boardDisplay += drawLetters();
+
+        return boardDisplay;
     }
 }
