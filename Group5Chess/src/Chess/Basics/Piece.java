@@ -15,10 +15,6 @@ public abstract class Piece {
         return isWhite;
     }
 
-    public String[] getShape() {
-        return shape;
-    }
-
     public void setShape(String[] shape) {
         this.shape = shape;
     }
