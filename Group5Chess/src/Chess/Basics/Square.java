@@ -7,11 +7,22 @@ public class Square {
     private int row;
     private int col;
     private Piece p = null;
+    private boolean highlighted = false;
+    private String hightlightColor;
     private String[] shape = new String[] {"□", "■"};
 
     public Square(int row, int col) {
         this.row = row;
         this.col = col;
+    }
+
+    public void highlight(String c) {
+        highlighted = true;
+        hightlightColor = c;
+    }
+
+    public boolean isHighlighted() {
+        return highlighted;
     }
 
     public Square(int row, int col, Piece p) {
@@ -29,14 +40,18 @@ public class Square {
     }
 
     public String drawTile() {
+        String displayReturn = "";
         if (isEmpty()) {
             int selectedTile = ((col % 2 == 0) ? 0 : 1);
             if (row % 2 != 0)
                 selectedTile = ((selectedTile == 0) ? 1 : 0);
-            return shape[selectedTile] + Config.spacing;
+            displayReturn = ((isHighlighted())?String.format(Config.htmlHighlightOpen, hightlightColor):"") + shape[selectedTile] + ((isHighlighted())?Config.htmlHighlightClose:"") + Config.spacing;
         }else {
-            return p.toString() + Config.spacing;
+            displayReturn = ((isHighlighted())?String.format(Config.htmlHighlightOpen, hightlightColor):"") + p.toString() + ((isHighlighted())?Config.htmlHighlightClose:"") + Config.spacing;
         }
+
+        highlighted = false;
+        return displayReturn;
     }
 
     public int getRow() {

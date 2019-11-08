@@ -18,7 +18,7 @@ public class Display {
     private void setupFrame() {
         appFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         appFrame.setResizable(false);
-        appFrame.setSize(Config.boardDimentions[0],Config.boardDimentions[1]);
+        appFrame.setSize(Config.boardDimentions[0], Config.boardDimentions[1]);
         appFrame.setVisible(true);
     }
 
@@ -34,6 +34,6 @@ public class Display {
     }
 
     public void draw(String t) {
-        screen.setText(t);
+        screen.draw(t);
     }
 }

@@ -25,12 +25,30 @@ public class Game {
     };
 
     private String drawPlayers() {
-        return "♔ "+players.get(PieceColor.WHITE).getName()+" \n"+players.get(PieceColor.WHITE).getCapturedPieces()+"\n"+
-                "♚ "+players.get(PieceColor.BLACK).getName()+" \n"+players.get(PieceColor.BLACK).getCapturedPieces();
+        return "♔ "+players.get(PieceColor.WHITE).getName()+Config.lineBreaker+
+                players.get(PieceColor.WHITE).getCapturedPieces()+Config.lineBreaker+
+                "♚ "+players.get(PieceColor.BLACK).getName()+Config.lineBreaker+
+                players.get(PieceColor.BLACK).getCapturedPieces();
     }
 
     public Game() {
-        display.draw(board.draw()+"\n"+drawPlayers());
+        display.draw(board.draw()+Config.lineBreaker+drawPlayers());
+
+        while(true) {
+            askMovement();
+            display.draw(board.draw()+Config.lineBreaker+drawPlayers());
+        }
+    }
+
+    public void hightlight(String[] list, String color) {
+        for (int i = 0; i < list.length; i++) {
+            if (board.getGrid().containsKey(list[i])) {
+                board.getGrid().get(list[i]).highlight(color);
+            }
+        }
+
+        //Everytime a Piece is highlighted screen has to be re-draw;
+        display.draw(board.draw()+Config.lineBreaker+drawPlayers());
     }
 
     public Board getBoard() {
@@ -51,6 +69,9 @@ public class Game {
                 System.out.println("The input is not valid.");
             }
         }
+
+        //Show Selected Piece
+        hightlight(new String[] {"a3", "b3"}, "red");
 
         boolean validateTo = false;
         while (!validateTo) {

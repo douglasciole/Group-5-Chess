@@ -11,7 +11,7 @@ public class Board {
     private Map<String, Square> grid = new Hashtable<>();
 
     private String drawLetters() {
-        return String.format(Config.letters.charAt(0)+"%s"+Config.letters.charAt(1)+"%s"+Config.letters.charAt(2)+"%s"+Config.letters.charAt(3)+"%s"+Config.letters.charAt(4)+"%s"+Config.letters.charAt(5)+"%s"+Config.letters.charAt(6)+"%s"+Config.letters.charAt(7)+"%s\n", Config.spacing, Config.spacing, Config.spacing, Config.spacing, Config.spacing, Config.spacing, Config.spacing, Config.spacing);
+        return String.format(Config.letters.charAt(0)+"%s"+Config.letters.charAt(1)+"%s"+Config.letters.charAt(2)+"%s"+Config.letters.charAt(3)+"%s"+Config.letters.charAt(4)+"%s"+Config.letters.charAt(5)+"%s"+Config.letters.charAt(6)+"%s"+Config.letters.charAt(7)+"%s"+Config.lineBreaker, Config.spacing, Config.spacing, Config.spacing, Config.spacing, Config.spacing, Config.spacing, Config.spacing, Config.spacing);
     }
 
     private String drawNumbers(int i) {
@@ -87,7 +87,7 @@ public class Board {
                 boardDisplay += grid.get(Config.letters.charAt(j)+""+(i+1)).drawTile();
             }
 
-            boardDisplay += drawNumbers(i) + "\n";
+            boardDisplay += drawNumbers(i) + Config.lineBreaker;
         }
 
         boardDisplay += drawLetters();
