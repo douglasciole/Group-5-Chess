@@ -94,4 +94,8 @@ public class Board {
 
         return boardDisplay;
     }
+
+    public Map<String, Square> getGrid() {
+        return grid;
+    }
 }

@@ -4,7 +4,7 @@ public abstract class Piece {
     private String[] shape;
     private boolean isWhite;
 
-    public abstract String Move();
+    public abstract boolean isValidMove(Square from, Square to);
 
     @Override
     public String toString() {
