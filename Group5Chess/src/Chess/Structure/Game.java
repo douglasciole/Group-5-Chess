@@ -8,8 +8,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Game {
-    Board board = new Board();
-    Display display = new Display();
+    private Board board = new Board();
+    private Display display = new Display();
+    private static Game GAME_INSTANCE;
+    public static Game getGameInstance() {
+        if (GAME_INSTANCE == null) {
+            GAME_INSTANCE = new Game();
+        }
+        return GAME_INSTANCE;
+    }
 
     Map<PieceColor, Player> players = new HashMap<>() {
         {put(PieceColor.BLACK, new Player("Player 1"));};
@@ -23,5 +30,9 @@ public class Game {
 
     public Game() {
         display.draw(board.draw()+"\n"+drawPlayers());
+    }
+
+    public Board getBoard() {
+        return board;
     }
 }
