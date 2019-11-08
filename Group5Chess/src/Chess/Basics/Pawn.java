@@ -16,7 +16,7 @@ public class Pawn extends Piece {
     public boolean isValidMove(Square from, Square to) {
         Game game = Game.getGameInstance();
         boolean valid = false;
-        while (to.getRow() <= 8 && to.getCol() <= 8) {
+        if (to.getRow() <= 8 && to.getRow() >= 0 && to.getCol() <= 8 && to.getCol() >= 0) {
             if (isWhite()) {
                 if (firstMove) {
                     if (to.getRow() == from.getRow() + 1 || to.getRow() == from.getRow() + 2) {
