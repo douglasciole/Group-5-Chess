@@ -11,7 +11,7 @@ public class Config {
 
     public static final Font font = new Font(Font.MONOSPACED, Font.PLAIN, 18);
     public static final String htmlFont = "font-family: monospace;";
-    public static final String htmlSize = "font-size: 19px;";
+    public static final String htmlSize = "font-size: 12px;";
 
     public static final String htmlHighlightOpen = "<span style=\"color: %s;\">";
     public static final String htmlHighlightClose = "</span>";

@@ -12,6 +12,7 @@ public class Game {
     private Board board = new Board();
     private Display display = new Display();
     private static Game GAME_INSTANCE;
+
     public static Game getGameInstance() {
         if (GAME_INSTANCE == null) {
             GAME_INSTANCE = new Game();
@@ -20,24 +21,27 @@ public class Game {
     }
 
     Map<PieceColor, Player> players = new HashMap<>() {
-        {put(PieceColor.BLACK, new Player("Player 1"));};
-        {put(PieceColor.WHITE, new Player("Player 2"));}
+        {
+            put(PieceColor.BLACK, new Player("Player 1"));
+        }
+
+        ;
+
+        {
+            put(PieceColor.WHITE, new Player("Player 2"));
+        }
     };
 
     private String drawPlayers() {
-        return "♔ "+players.get(PieceColor.WHITE).getName()+Config.lineBreaker+
-                players.get(PieceColor.WHITE).getCapturedPieces()+Config.lineBreaker+
-                "♚ "+players.get(PieceColor.BLACK).getName()+Config.lineBreaker+
+        return "♔ " + players.get(PieceColor.WHITE).getName() + Config.lineBreaker +
+                players.get(PieceColor.WHITE).getCapturedPieces() + Config.lineBreaker +
+                "♚ " + players.get(PieceColor.BLACK).getName() + Config.lineBreaker +
                 players.get(PieceColor.BLACK).getCapturedPieces();
     }
 
     public Game() {
-        display.draw(board.draw()+Config.lineBreaker+drawPlayers());
-
-        while(true) {
-            askMovement();
-            display.draw(board.draw()+Config.lineBreaker+drawPlayers());
-        }
+        display.draw(board.draw() + Config.lineBreaker + drawPlayers());
+        display.draw(board.draw() + Config.lineBreaker + drawPlayers());
     }
 
     public void hightlight(String[] list, String color) {
@@ -48,7 +52,7 @@ public class Game {
         }
 
         //Everytime a Piece is highlighted screen has to be re-draw;
-        display.draw(board.draw()+Config.lineBreaker+drawPlayers());
+        display.draw(board.draw() + Config.lineBreaker + drawPlayers());
     }
 
     public Board getBoard() {
@@ -56,36 +60,26 @@ public class Game {
     }
 
     public void askMovement() {
-        Scanner scanner = new Scanner(System.in);
-        String from = "";
-        String to = "";
-        boolean validateFrom = false;
-        while (!validateFrom) {
-            // TODO: how the player input the movement
-            System.out.print("Input the current position of the piece you want to move:");
-            from = scanner.nextLine();
-            validateFrom = validateInput(from);
-            if (!validateFrom) {
-                System.out.println("The input is not valid.");
-            }
+        String current = display.currentField.getText();
+        String next = display.nextField.getText();
+        if (!validateInput(current)) {
+            // TODO: how to show the error message
+            return;
+        }
+        if (!validateInput(next)) {
+            // TODO: how to show the error message
+            return;
         }
 
         //Show Selected Piece
-        hightlight(new String[] {"a3", "b3"}, "red");
-
-        boolean validateTo = false;
-        while (!validateTo) {
-            // TODO: how the player input the movement
-            System.out.print("Input the position where you want the piece to move to:");
-            to = scanner.nextLine();
-            validateTo = validateInput(to);
-            if (!validateTo) {
-                System.out.println("The input is not valid.");
-            }
-        }
+        hightlight(new String[]{current, next}, "red");
 
         // TODO: make sure which class and which method I need to call here
-        board.movePiece(from, to);
+        board.movePiece(current, next);
+    }
+
+    private static void controlDisplay(){
+
     }
 
     private static boolean validateInput(String input) {
