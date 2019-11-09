@@ -23,9 +23,9 @@ public class Board {
         grid.put("b2", new Square(1, 1, new Pawn(true)));
         grid.put("c2", new Square(1, 2, new Pawn(true)));
         grid.put("d2", new Square(1, 3, new Pawn(true)));
-        grid.put("e2", new Square(1, 4, new Pawn(true)));
+        //grid.put("e2", new Square(1, 4, new Pawn(true)));
         grid.put("f2", new Square(1, 5, new Pawn(true)));
-        grid.put("g2", new Square(1, 6, new Pawn(true)));
+        //grid.put("g2", new Square(1, 6, new Pawn(true)));
         grid.put("h2", new Square(1, 7, new Pawn(true)));
 
         grid.put("a1", new Square(0, 0, new Rook(true)));

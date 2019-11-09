@@ -71,7 +71,9 @@ public class Game {
         }
 
         //Show Selected Piece
-        hightlight(new String[] {"a3", "b3"}, "red");
+        //hightlight(new String[] {"a3", "b3"}, "red");
+
+
 
         boolean validateTo = false;
         while (!validateTo) {
