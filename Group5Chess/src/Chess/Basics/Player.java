@@ -7,6 +7,10 @@ public class Player {
     private String name;
     private ArrayList<Piece> capturedPieces = new ArrayList<>();
 
+    public void reset() {
+        capturedPieces = new ArrayList<>();
+    }
+
     public Player(String name) {this.setName(name);}
     public Player(PieceColor pieceColor) {
         this.pieceColor = pieceColor;

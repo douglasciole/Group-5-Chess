@@ -63,7 +63,8 @@ public class Board {
         grid.get(from).changePiece(null);
     }
 
-    public Board() {
+    public void reset() {
+        grid = new Hashtable<>();
 
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -73,6 +74,10 @@ public class Board {
 
         setUpWhite();
         setUpBlack();
+    }
+
+    public Board() {
+        reset();
     }
 
     public String draw() {
