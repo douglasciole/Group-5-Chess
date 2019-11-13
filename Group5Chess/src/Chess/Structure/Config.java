@@ -7,8 +7,9 @@ import javax.swing.text.PlainDocument;
 import java.awt.*;
 
 public class Config {
+    public static final String gameTitle = "Group 5 Chess";
+
     public static final String letters = "abcdefgh";
-    public static final String numbers = "12345678";
     public static final String spacing = "  ";
     public static final int[] boardDimentions = new int[] {550, 550};
     public static final Color screenColor = Color.WHITE;

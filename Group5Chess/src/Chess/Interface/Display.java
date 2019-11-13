@@ -14,7 +14,7 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 public class Display {
-    private JFrame appFrame = new JFrame("Groupe 5 Chess");
+    private JFrame appFrame = new JFrame(Config.gameTitle);
     Screen screen = new Screen();
     public DTextPanel currentField = new DTextPanel("From Position", 2, 5);
     public DTextPanel nextField = new DTextPanel("To Position", 2, 5);

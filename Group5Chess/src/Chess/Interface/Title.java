@@ -12,7 +12,7 @@ import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeListener;
 
 public class Title {
-    private JFrame appFrame = new JFrame("Groupe 5 Chess");
+    private JFrame appFrame = new JFrame(Config.gameTitle);
     private JLabel networkStatus = new JLabel("⌁ Connected(Room 1)");
     private boolean connected = false;
     DTextPanel player1 = new DTextPanel("♔ White", 15,15);
@@ -45,7 +45,7 @@ public class Title {
         Container topContainer = Box.createVerticalBox();
         topContainer.setBounds(10, 10, 290, 190);
 
-        JLabel topTitle = new JLabel("Goupe 5 Chess");
+        JLabel topTitle = new JLabel(Config.gameTitle);
         topTitle.setFont(new Font(Font.SERIF, Font.BOLD, 32));
         topTitle.setBorder(new EmptyBorder(20, 0, 10, 10));
         topContainer.add(topTitle);
