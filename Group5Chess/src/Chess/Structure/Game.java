@@ -33,6 +33,10 @@ public class Game {
         board = new Board();
     }
 
+    public Player getPlayer(PieceColor color) {
+        return this.players.get(color);
+    }
+
     public void setPlayerName(PieceColor color, String name) {
         players.get(color).setName(name);
         update();

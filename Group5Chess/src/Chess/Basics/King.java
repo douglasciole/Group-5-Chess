@@ -23,14 +23,14 @@ public class King extends Piece {
         ArrayList<String> retList = new ArrayList<String>();
         Board board = Game.getGameInstance().getBoard();
 
-        if (from.fixRow() + 1 <= 8) { moves.add(Character.toString(Config.letters.charAt(from.getCol())) + (from.fixRow() + 1)); }
-        if (from.fixRow() - 1 >= 1) { moves.add(Character.toString(Config.letters.charAt(from.getCol())) + (from.fixRow() - 1)); }
+        if (from.getRow() + 1 <= 7) { moves.add(Character.toString(Config.letters.charAt(from.getCol())) + (from.fixRow() + 1)); }
+        if (from.getRow() - 1 >= 0) { moves.add(Character.toString(Config.letters.charAt(from.getCol())) + (from.fixRow() - 1)); }
         if (from.getCol() + 1 <= 7) { moves.add(Character.toString(Config.letters.charAt(from.getCol() + 1)) + from.fixRow()); }
         if (from.getCol() - 1 >= 0) { moves.add(Character.toString(Config.letters.charAt(from.getCol() - 1)) + from.fixRow()); }
-        if (from.fixRow() + 1 <= 8 && from.getCol() + 1 <= 7) { moves.add(Character.toString(Config.letters.charAt(from.getCol() + 1)) + (from.fixRow() + 1)); }
-        if (from.fixRow() - 1 >= 1 && from.getCol() - 1 >= 0) { moves.add(Character.toString(Config.letters.charAt(from.getCol() - 1)) + (from.fixRow() - 1)); }
-        if (from.fixRow() + 1 <= 8 && from.getCol() - 1 >= 0) { moves.add(Character.toString(Config.letters.charAt(from.getCol() - 1)) + (from.fixRow() + 1)); }
-        if (from.fixRow() - 1 >= 1 && from.getCol() + 1 <= 7) { moves.add(Character.toString(Config.letters.charAt(from.getCol() + 1)) + (from.fixRow() - 1)); }
+        if (from.getRow() + 1 <= 7 && from.getCol() + 1 <= 7) { moves.add(Character.toString(Config.letters.charAt(from.getCol() + 1)) + (from.fixRow() + 1)); }
+        if (from.getRow() - 1 >= 0 && from.getCol() - 1 >= 0) { moves.add(Character.toString(Config.letters.charAt(from.getCol() - 1)) + (from.fixRow() - 1)); }
+        if (from.getRow() + 1 <= 7 && from.getCol() - 1 >= 0) { moves.add(Character.toString(Config.letters.charAt(from.getCol() - 1)) + (from.fixRow() + 1)); }
+        if (from.getRow() - 1 >= 0 && from.getCol() + 1 <= 7) { moves.add(Character.toString(Config.letters.charAt(from.getCol() + 1)) + (from.fixRow() - 1)); }
 
         for (int i = 0; i < moves.size(); i++) {
             if ((!board.getGrid().get(moves.get(i)).isEmpty() && board.getGrid().get(moves.get(i)).getPiece().getColor() != getColor()) ||

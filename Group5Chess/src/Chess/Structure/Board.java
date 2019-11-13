@@ -10,6 +10,7 @@ import java.util.Map;
  */
 public class Board {
     private Map<String, Square> grid = new Hashtable<>();
+    private PieceColor whoIsPlaying = PieceColor.WHITE;
 
     private String drawLetters() {
         return String.format(Config.letters.charAt(0)+"%s"+Config.letters.charAt(1)+"%s"+Config.letters.charAt(2)+"%s"+Config.letters.charAt(3)+"%s"+Config.letters.charAt(4)+"%s"+Config.letters.charAt(5)+"%s"+Config.letters.charAt(6)+"%s"+Config.letters.charAt(7)+"%s"+Config.lineBreaker, Config.spacing, Config.spacing, Config.spacing, Config.spacing, Config.spacing, Config.spacing, Config.spacing, Config.spacing);
@@ -61,8 +62,13 @@ public class Board {
 
     public boolean movePiece(String from, String to) {
         if (grid.get(from).getPiece().isValidMove(grid.get(from), grid.get(to))) {
+            if (!grid.get(to).isEmpty()) {
+                Game.getGameInstance().getPlayer(whoIsPlaying).capture(grid.get(to).getPiece());
+            }
+
             grid.get(to).changePiece(grid.get(from).getPiece());
             grid.get(from).changePiece(null);
+
             return true;
         }else {
             JOptionPane.showMessageDialog(null, "This moviment is not alowed, try again!");
@@ -75,7 +81,7 @@ public class Board {
 
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                grid.put(Config.letters.charAt(i)+""+j, new Square(j, i));
+                grid.put(Config.letters.charAt(i)+""+(j+1), new Square(j, i));
             }
         }
 
