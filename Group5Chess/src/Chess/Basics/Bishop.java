@@ -3,12 +3,13 @@ package Chess.Basics;
 import Chess.Structure.Config;
 import Chess.Structure.Game;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class Bishop extends Piece{
 
-    public Bishop(boolean isWhite) {
-        super(new String[] {"♗", "♝"}, isWhite);
+    public Bishop(PieceColor color) {
+        super(new String[] {"♗", "♝"}, color);
     }
 
     @Override
@@ -80,5 +81,10 @@ public class Bishop extends Piece{
             }
         }
         return false;
+    }
+
+    @Override
+    public ArrayList<String> getPossibleMoves(Square from) {
+        return null;
     }
 }

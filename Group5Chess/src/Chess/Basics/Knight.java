@@ -2,10 +2,12 @@ package Chess.Basics;
 
 import Chess.Structure.Game;
 
+import java.util.ArrayList;
+
 public class Knight extends Piece {
 
-    public Knight(boolean isWhite) {
-        super(new String[] {"♘", "♞"}, isWhite);
+    public Knight(PieceColor color) {
+        super(new String[]{"♘", "♞"}, color);
     }
 
     @Override
@@ -30,5 +32,10 @@ public class Knight extends Piece {
             }
         }
         return false;
+    }
+
+    @Override
+    public ArrayList<String> getPossibleMoves(Square from) {
+        return null;
     }
 }

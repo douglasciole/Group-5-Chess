@@ -1,6 +1,7 @@
 package Chess.Interface;
 
 import Chess.Basics.DTextPanel;
+import Chess.Basics.Square;
 import Chess.Structure.Config;
 import Chess.Structure.Game;
 
@@ -10,6 +11,7 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 public class Display {
     private JFrame appFrame = new JFrame("Groupe 5 Chess");
@@ -91,29 +93,53 @@ public class Display {
 
 class KeyUpValidadte extends KeyAdapter {
     @Override
+    public void keyPressed(KeyEvent e) {
+        String current = Game.getGameInstance().getDisplay().currentField.getText();
+        String next = Game.getGameInstance().getDisplay().nextField.getText();
+
+        if(e.getKeyCode() == KeyEvent.VK_ENTER &&
+                current.length() > 1 && Game.validateInput(current) &&
+                next.length() > 1 && Game.validateInput(next)){
+            if (Game.getGameInstance().getBoard().movePiece(current, next)) {
+                Game.getGameInstance().getDisplay().currentField.setText("");
+                Game.getGameInstance().getDisplay().nextField.setText("");
+                Game.getGameInstance().update();
+                return;
+            }
+        }
+    }
+
+    @Override
     public void keyReleased(KeyEvent e) {
         String current = Game.getGameInstance().getDisplay().currentField.getText();
         String next = Game.getGameInstance().getDisplay().nextField.getText();
 
-        if(e.getKeyCode() == KeyEvent.VK_ENTER){
-            Game.getGameInstance().getBoard().movePiece(current, next);
-            Game.getGameInstance().getDisplay().currentField.setText("");
-            Game.getGameInstance().getDisplay().nextField.setText("");
-            Game.getGameInstance().update();
-            return;
-        }
         if (current.length() > 1) {
             if (Game.validateInput(current)) {
-                Game.getGameInstance().hightlight(new String[]{current}, Config.htmlFromColor, false);
+                Square selectedSquare = Game.getGameInstance().getBoard().getGrid().get(current);
+                if (!selectedSquare.isEmpty()) {
+                    Game.getGameInstance().hightlight(new String[]{current}, Config.htmlFromColor, false);
+
+                    ArrayList<String> tmpList = selectedSquare.getPiece().getPossibleMoves(selectedSquare);
+                    String[] possibleMoves = (tmpList != null)?new String[tmpList.size()] : new String[0];
+                    if (tmpList != null)
+                        possibleMoves = tmpList.toArray(possibleMoves);
+
+                    Game.getGameInstance().hightlight(possibleMoves, Config.htmlMovimentColor, false);
+
+                    //Hightlight if TO option is a valid option
+                    if (next.length() > 1 &&
+                            !current.equals(next)) {
+                        if (Game.validateInput(next) && tmpList != null && tmpList.contains(next)) {
+                            Game.getGameInstance().hightlight(new String[]{next}, Config.htmlToColor, false);
+                        }
+                    }
+
+                }
             }
         }
 
-        if (next.length() > 1 &&
-                !current.equals(next)) {
-            if (Game.validateInput(next)) {
-                Game.getGameInstance().hightlight(new String[]{next}, Config.htmlToColor, false);
-            }
-        }
+
 
         Game.getGameInstance().update();
     }

@@ -57,9 +57,14 @@ public class Square {
     public int getRow() {
         return row;
     }
-
     public int getCol() {
         return col;
+    }
+    public int fixRow() {
+        return row + 1;
+    }
+    public int fixCol() {
+        return col + 1;
     }
 
     public Piece getPiece() {

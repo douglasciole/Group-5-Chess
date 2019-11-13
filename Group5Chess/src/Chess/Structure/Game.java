@@ -39,10 +39,12 @@ public class Game {
     }
 
     private String drawPlayers() {
-        return "♔ " + players.get(PieceColor.WHITE).getName() + Config.lineBreaker +
-                players.get(PieceColor.WHITE).getCapturedPieces() + Config.lineBreaker +
-                "♚ " + players.get(PieceColor.BLACK).getName() + Config.lineBreaker +
-                players.get(PieceColor.BLACK).getCapturedPieces();
+        return "<div style=\"font-size: 12px;\">" +
+                    "♔ " + players.get(PieceColor.WHITE).getName() + Config.lineBreaker +
+                    players.get(PieceColor.WHITE).getCapturedPieces() + Config.lineBreaker +
+                    "♚ " + players.get(PieceColor.BLACK).getName() + Config.lineBreaker +
+                    players.get(PieceColor.BLACK).getCapturedPieces()+
+                "</div>";
     }
 
     public Game() {

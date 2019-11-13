@@ -2,10 +2,12 @@ package Chess.Basics;
 
 import Chess.Structure.Game;
 
+import java.util.ArrayList;
+
 public class Queen extends Piece {
 
-    public Queen(boolean isWhite) {
-        super(new String[] {"♕", "♛"}, isWhite);
+    public Queen(PieceColor color) {
+        super(new String[] {"♕", "♛"}, color);
     }
 
     @Override
@@ -20,5 +22,10 @@ public class Queen extends Piece {
             }
         }
         return false;
+    }
+
+    @Override
+    public ArrayList<String> getPossibleMoves(Square from) {
+        return null;
     }
 }

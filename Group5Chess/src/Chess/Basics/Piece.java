@@ -1,10 +1,13 @@
 package Chess.Basics;
 
+import java.util.ArrayList;
+
 public abstract class Piece {
     private String[] shape;
-    private boolean isWhite;
+    private PieceColor color;
 
     public abstract boolean isValidMove(Square from, Square to);
+    public abstract ArrayList<String> getPossibleMoves(Square from);
 
     @Override
     public String toString() {
@@ -12,19 +15,18 @@ public abstract class Piece {
     }
 
     public boolean isWhite() {
-        return isWhite;
+        return color == PieceColor.WHITE;
     }
+
+    public PieceColor getColor() { return color; }
+    public void setColor(PieceColor color) { this.color = color; }
 
     public void setShape(String[] shape) {
         this.shape = shape;
     }
 
-    public void setWhite(boolean white) {
-        isWhite = white;
-    }
-
-    public Piece(String[] shape, boolean isWhite) {
+    public Piece(String[] shape, PieceColor color) {
         setShape(shape);
-        setWhite(isWhite);
+        setColor(color);
     }
 }

@@ -2,6 +2,8 @@ package Chess.Basics;
 
 import Chess.Structure.Game;
 
+import java.util.ArrayList;
+
 public class Pawn extends Piece {
 
     private Piece newPiece = null;
@@ -43,7 +45,12 @@ public class Pawn extends Piece {
         return valid;
     }
 
-    public Pawn(boolean isWhite) {
-        super(new String[] {"♙", "♟"}, isWhite);
+    @Override
+    public ArrayList<String> getPossibleMoves(Square from) {
+        return null;
+    }
+
+    public Pawn(PieceColor color) {
+        super(new String[] {"♙", "♟"}, color);
     }
 }
