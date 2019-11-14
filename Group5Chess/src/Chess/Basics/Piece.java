@@ -5,9 +5,18 @@ import java.util.ArrayList;
 public abstract class Piece {
     private String[] shape;
     private PieceColor color;
+    private boolean firstMove = true;
 
     public abstract boolean isValidMove(Square from, Square to);
     public abstract ArrayList<String> getPossibleMoves(Square from);
+
+    public boolean isFirstMove() {
+        return firstMove;
+    }
+
+    public void setMoved() {
+        this.firstMove = false;
+    }
 
     @Override
     public String toString() {
