@@ -1,5 +1,7 @@
 package Chess.Basics;
 
+import Chess.Structure.Board;
+import Chess.Structure.Config;
 import Chess.Structure.Game;
 
 import java.util.ArrayList;
@@ -7,7 +9,6 @@ import java.util.ArrayList;
 public class Pawn extends Piece {
 
     private Piece newPiece = null;
-    private boolean firstMove = true;
 
     public void promote(Piece newPiece) {
         if (this.newPiece == null)
@@ -16,38 +17,61 @@ public class Pawn extends Piece {
 
     @Override
     public boolean isValidMove(Square from, Square to) {
-        Game game = Game.getGameInstance();
-        boolean valid = false;
-        if (to.getRow() <= 8 && to.getRow() >= 0 && to.getCol() <= 8 && to.getCol() >= 0) {
-            if (isWhite()) {
-                if (firstMove) {
-                    if (to.getRow() == from.getRow() + 1 || to.getRow() == from.getRow() + 2) {
-                        valid = true;
-                        firstMove = false;
-                    }
-                    valid = false;
-                }
-                if (to.getRow() == from.getRow() + 1) {
-                    valid = true;
-                }
-            }
-            if (firstMove) {
-                if (to.getRow() == from.getRow() - 1 || to.getRow() == from.getRow() - 2) {
-                    valid = true;
-                    firstMove = false;
-                }
-                valid = false;
-            }
-            if (to.getRow() == from.getRow() - 1) {
-                valid = true;
-            }
-        }
-        return valid;
+        return from.getPiece().getPossibleMoves(from).contains(Character.toString(Config.letters.charAt(to.getCol())) + to.fixRow());
     }
 
     @Override
     public ArrayList<String> getPossibleMoves(Square from) {
-        return null;
+        ArrayList<String> moves = new ArrayList<String>();
+        Board board = Game.getGameInstance().getBoard();
+
+        String pos = "";
+
+        if (getColor() == PieceColor.WHITE) {
+            pos = Character.toString(Config.letters.charAt(from.getCol())) + (from.fixRow() + 1);
+            if (from.getRow() + 1 <= 7 && (board.getGrid().get(pos).isEmpty())) {
+                moves.add(Character.toString(Config.letters.charAt(from.getCol())) + (from.fixRow() + 1));
+            }
+            pos = Character.toString(Config.letters.charAt(from.getCol())) + (from.fixRow() + 2);
+            if (isFirstMove() && (board.getGrid().get(pos).isEmpty())) {
+                moves.add(Character.toString(Config.letters.charAt(from.getCol())) + (from.fixRow() + 2));
+            }
+            if (from.getCol() + 1 <= 7) {
+                pos = Character.toString(Config.letters.charAt(from.getCol() + 1)) + (from.fixRow() + 1);
+                if ((from.getRow() + 1 <= 7) && (!board.getGrid().get(pos).isEmpty() && board.getGrid().get(pos).getPiece().getColor() != getColor())) {
+                    moves.add(Character.toString(Config.letters.charAt(from.getCol() + 1)) + (from.fixRow() + 1));
+                }
+            }
+            if (from.getCol() - 1 >= 0) {
+                pos = Character.toString(Config.letters.charAt(from.getCol() - 1)) + (from.fixRow() + 1);
+                if ((from.getRow() + 1 <= 7) && (!board.getGrid().get(pos).isEmpty() && board.getGrid().get(pos).getPiece().getColor() != getColor())) {
+                    moves.add(Character.toString(Config.letters.charAt(from.getCol() - 1)) + (from.fixRow() + 1));
+                }
+            }
+        } else {
+            pos = Character.toString(Config.letters.charAt(from.getCol())) + (from.fixRow() - 1);
+            if (from.getRow() - 1 >= 0 && (board.getGrid().get(pos).isEmpty())) {
+                moves.add(Character.toString(Config.letters.charAt(from.getCol())) + (from.fixRow() - 1));
+            }
+            pos = Character.toString(Config.letters.charAt(from.getCol())) + (from.fixRow() - 2);
+            if (isFirstMove() && (board.getGrid().get(pos).isEmpty())) {
+                moves.add(Character.toString(Config.letters.charAt(from.getCol())) + (from.fixRow() - 2));
+            }
+            if (from.getCol() + 1 <= 7) {
+                pos = Character.toString(Config.letters.charAt(from.getCol() + 1)) + (from.fixRow() - 1);
+                if ((from.getRow() - 1 >= 0) && (!board.getGrid().get(pos).isEmpty() && board.getGrid().get(pos).getPiece().getColor() != getColor())) {
+                    moves.add(Character.toString(Config.letters.charAt(from.getCol() + 1)) + (from.fixRow() - 1));
+                }
+            }
+            if (from.getCol() - 1 >= 0) {
+                pos = Character.toString(Config.letters.charAt(from.getCol() - 1)) + (from.fixRow() - 1);
+                if ((from.getRow() - 1 >= 0) && (!board.getGrid().get(pos).isEmpty() && board.getGrid().get(pos).getPiece().getColor() != getColor())) {
+                    moves.add(Character.toString(Config.letters.charAt(from.getCol() - 1)) + (from.fixRow() - 1));
+                }
+            }
+        }
+
+        return moves;
     }
 
     public Pawn(PieceColor color) {

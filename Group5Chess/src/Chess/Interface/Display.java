@@ -71,6 +71,7 @@ public class Display {
                 Game.getGameInstance().getBoard().movePiece(currentField.getText(), nextField.getText());
                 currentField.setText("");
                 nextField.setText("");
+                currentField.focus();
                 Game.getGameInstance().update();
             }
         });
@@ -106,6 +107,7 @@ class KeyUpValidadte extends KeyAdapter {
                 if (Game.getGameInstance().getBoard().movePiece(current, next)) {
                     Game.getGameInstance().getDisplay().currentField.setText("");
                     Game.getGameInstance().getDisplay().nextField.setText("");
+                    Game.getGameInstance().getDisplay().currentField.focus();
                     Game.getGameInstance().update();
                     return;
                 }

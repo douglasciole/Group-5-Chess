@@ -32,6 +32,10 @@ public class DTextPanel extends JPanel {
         add(text);
     }
 
+    public void focus() {
+        text.requestFocus();
+    }
+
     public String getText() {
         return text.getText();
     }

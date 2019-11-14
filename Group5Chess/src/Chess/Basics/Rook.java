@@ -1,5 +1,6 @@
 package Chess.Basics;
 
+import Chess.Structure.Board;
 import Chess.Structure.Config;
 import Chess.Structure.Game;
 
@@ -14,18 +15,30 @@ public class Rook extends Piece {
 
     @Override
     public boolean isValidMove(Square from, Square to) {
-        Map<String, Square> grid = Game.getGameInstance().getBoard().getGrid();
-        if (to.getRow() <= 8 && to.getRow() >= 0 && to.getCol() <= 8 && to.getCol() >= 0) {
-            if ((to.getCol() == from.getCol() && to.getRow() != from.getRow()) ||
-                    (to.getCol() != from.getCol() && to.getRow() == from.getRow())) {
-                return true;
-            }
-        }
-        return false;
+        return from.getPiece().getPossibleMoves(from).contains(Character.toString(Config.letters.charAt(to.getCol())) + to.fixRow());
     }
 
     @Override
     public ArrayList<String> getPossibleMoves(Square from) {
-        return null;
+        ArrayList<String> moves = new ArrayList<String>();
+        Board board = Game.getGameInstance().getBoard();
+
+        String pos = "";
+
+        if (getColor() == PieceColor.WHITE) {
+            for (int r = 0; r <= 7; r++) {
+                pos = Character.toString(Config.letters.charAt(from.getCol())) + (from.fixRow() + r);
+                if (board.getGrid().get(pos).isEmpty()) {
+                    moves.add(Character.toString(Config.letters.charAt(from.getCol())) + (from.fixRow() + r));
+                }
+            }
+        }
+
+//            if ((to.getCol() == from.getCol() && to.getRow() != from.getRow()) ||
+//                    (to.getCol() != from.getCol() && to.getRow() == from.getRow())) {
+//                return true;
+//            }
+
+        return moves;
     }
 }
