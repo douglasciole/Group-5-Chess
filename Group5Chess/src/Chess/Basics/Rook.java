@@ -25,54 +25,57 @@ public class Rook extends Piece {
 
         String pos = "";
 
-        for (int r1 = from.fixRow(); r1 <= 7; r1++) {
-            pos = Character.toString(Config.letters.charAt(from.getCol())) + (from.fixRow() + r1);
+        for (int up = from.fixRow() + 1; up <= 8; up++) {
+            pos = Character.toString(Config.letters.charAt(from.getCol())) + up;
 
             if (board.getGrid().get(pos).isEmpty()) {
-                moves.add(Character.toString(Config.letters.charAt(from.getCol())) + (from.fixRow() + r1));
+                moves.add(pos);
             }else if (board.getGrid().get(pos).getPiece().getColor() != getColor()) {
-                moves.add(Character.toString(Config.letters.charAt(from.getCol())) + (from.fixRow() + r1));
+                moves.add(pos);
                 break;
             }else if (board.getGrid().get(pos).getPiece().getColor() == getColor()) {
                 break;
             }
         }
-        for (int r2 = from.fixRow(); r2 >= 0; r2--) {
-            pos = Character.toString(Config.letters.charAt(from.getCol())) + (from.fixRow() - r2);
+        for (int down = from.getRow(); down > 0; down--) {
+            pos = Character.toString(Config.letters.charAt(from.getCol())) + down;
 
             if (board.getGrid().get(pos).isEmpty()) {
-                moves.add(Character.toString(Config.letters.charAt(from.getCol())) + (from.fixRow() - r2));
+                moves.add(pos);
             }else if (board.getGrid().get(pos).getPiece().getColor() != getColor()) {
-                moves.add(Character.toString(Config.letters.charAt(from.getCol())) + (from.fixRow() - r2));
+                moves.add(pos);
                 break;
             }else if (board.getGrid().get(pos).getPiece().getColor() == getColor()) {
                 break;
             }
         }
-//        for (int c1 = from.getCol(); c1 <= 7; c1++) {
-//            pos = Character.toString(Config.letters.charAt(from.getCol() + c1)) + (from.fixRow());
-//
-//            if (board.getGrid().get(pos).isEmpty()) {
-//                moves.add(Character.toString(Config.letters.charAt(from.getCol() + c1)) + (from.fixRow()));
-//            }else if (board.getGrid().get(pos).getPiece().getColor() != getColor()) {
-//                moves.add(Character.toString(Config.letters.charAt(from.getCol() + c1)) + (from.fixRow()));
-//                break;
-//            }else if (board.getGrid().get(pos).getPiece().getColor() == getColor()) {
-//                break;
-//            }
-//        }
-//        for (int c2 = from.getCol(); c2 >= 0; c2--) {
-//            pos = Character.toString(Config.letters.charAt(from.getCol() - c2)) + (from.fixRow());
-//
-//            if (board.getGrid().get(pos).isEmpty()) {
-//                moves.add(Character.toString(Config.letters.charAt(from.getCol() - c2)) + (from.fixRow()));
-//            }else if (board.getGrid().get(pos).getPiece().getColor() != getColor()) {
-//                moves.add(Character.toString(Config.letters.charAt(from.getCol() - c2)) + (from.fixRow()));
-//                break;
-//            }else if (board.getGrid().get(pos).getPiece().getColor() == getColor()) {
-//                break;
-//            }
-//        }
+
+        for (int left = from.getCol() - 1; left >= 0; left--) {
+            pos = Character.toString(Config.letters.charAt(left)) + from.fixRow();
+
+            if (board.getGrid().get(pos).isEmpty()) {
+                moves.add(pos);
+            }else if (board.getGrid().get(pos).getPiece().getColor() != getColor()) {
+                moves.add(pos);
+                break;
+            }else if (board.getGrid().get(pos).getPiece().getColor() == getColor()) {
+                break;
+            }
+        }
+
+        for (int right = from.getCol() + 1; right <= 7; right++) {
+            pos = Character.toString(Config.letters.charAt(right)) + from.fixRow();
+
+            if (board.getGrid().get(pos).isEmpty()) {
+                moves.add(pos);
+            }else if (board.getGrid().get(pos).getPiece().getColor() != getColor()) {
+                moves.add(pos);
+                break;
+            }else if (board.getGrid().get(pos).getPiece().getColor() == getColor()) {
+                break;
+            }
+        }
+        System.out.println(moves);
 
         return moves;
     }

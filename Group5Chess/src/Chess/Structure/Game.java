@@ -124,7 +124,7 @@ public class Game {
 
     public void requestMove(String current, String next) {
         Square selectedSquare = getBoard().getGrid().get(current);
-        if (selectedSquare.getPiece().getColor() == getCurrentPlayer()) {
+        if (selectedSquare.getPiece().getColor() == getCurrentPlayer() || Config.adminMode) {
             if (getBoard().movePiece(current, next)) {
                 getDisplay().currentField.setText("");
                 getDisplay().nextField.setText("");

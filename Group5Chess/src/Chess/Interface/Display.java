@@ -145,7 +145,7 @@ class KeyUpValidadte extends KeyAdapter {
         if (current.length() > 1) {
             if (Game.validateInput(current)) {
                 Square selectedSquare = Game.getGameInstance().getBoard().getGrid().get(current);
-                if (!selectedSquare.isEmpty() && selectedSquare.getPiece().getColor() == Game.getGameInstance().getCurrentPlayer()) {
+                if (!selectedSquare.isEmpty() && (selectedSquare.getPiece().getColor() == Game.getGameInstance().getCurrentPlayer() || Config.adminMode)) {
                     Game.getGameInstance().hightlight(new String[]{current}, Config.htmlFromColor, false);
 
                     if (!Game.getGameInstance().getDisplay().isLock()) {

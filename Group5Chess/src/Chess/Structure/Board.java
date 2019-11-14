@@ -20,14 +20,14 @@ public class Board {
     }
 
     private void setUpWhite() {
-        grid.put("a2", new Square(1, 0, new Pawn(PieceColor.WHITE)));
+        //grid.put("a2", new Square(1, 0, new Pawn(PieceColor.WHITE)));
         grid.put("b2", new Square(1, 1, new Pawn(PieceColor.WHITE)));
         grid.put("c2", new Square(1, 2, new Pawn(PieceColor.WHITE)));
         grid.put("d2", new Square(1, 3, new Pawn(PieceColor.WHITE)));
-        //grid.put("e2", new Square(1, 4, new Pawn(PieceColor.WHITE)));
+        grid.put("e2", new Square(1, 4, new Pawn(PieceColor.WHITE)));
         grid.put("f2", new Square(1, 5, new Pawn(PieceColor.WHITE)));
         grid.put("g2", new Square(1, 6, new Pawn(PieceColor.WHITE)));
-        grid.put("h2", new Square(1, 7, new Pawn(PieceColor.WHITE)));
+        //grid.put("h2", new Square(1, 7, new Pawn(PieceColor.WHITE)));
 
         grid.put("a1", new Square(0, 0, new Rook(PieceColor.WHITE)));
         grid.put("b1", new Square(0, 1, new Knight(PieceColor.WHITE)));
@@ -86,8 +86,6 @@ public class Board {
                 grid.put(Config.letters.charAt(i)+""+(j+1), new Square(j, i));
             }
         }
-
-        grid.put("e4", new Square(3, 4, new Rook(PieceColor.WHITE)));
 
         setUpWhite();
         setUpBlack();
