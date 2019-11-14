@@ -18,9 +18,24 @@ public class Display {
     Screen screen = new Screen();
     public DTextPanel currentField = new DTextPanel("From Position", 2, 5);
     public DTextPanel nextField = new DTextPanel("To Position", 2, 5);
+    private int backLock = 0;
+
+    public boolean isLock() {
+        return backLock > 0;
+    }
+
+    public void setLock() {
+        this.backLock = 2;
+    }
+
+    public void unlock() {
+        if (this.backLock > 0)
+            this.backLock--;
+    }
 
     public void show() {
         appFrame.setVisible(true);
+        currentField.focus();
     }
     public void hide() {
         appFrame.setVisible(false);
@@ -68,11 +83,14 @@ public class Display {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                Game.getGameInstance().getBoard().movePiece(currentField.getText(), nextField.getText());
-                currentField.setText("");
-                nextField.setText("");
-                currentField.focus();
-                Game.getGameInstance().update();
+                String current = Game.getGameInstance().getDisplay().currentField.getText();
+                String next = Game.getGameInstance().getDisplay().nextField.getText();
+
+                if(current.length() > 1 && Game.validateInput(current) &&
+                        next.length() > 1 && Game.validateInput(next)){
+
+                    Game.getGameInstance().requestMove(current, next);
+                }
             }
         });
         southPanel.add(button);
@@ -102,17 +120,21 @@ class KeyUpValidadte extends KeyAdapter {
                 current.length() > 1 && Game.validateInput(current) &&
                 next.length() > 1 && Game.validateInput(next)){
 
-            Square selectedSquare = Game.getGameInstance().getBoard().getGrid().get(current);
-            if (selectedSquare.getPiece().getColor() == Game.getGameInstance().getCurrentPlayer()) {
-                if (Game.getGameInstance().getBoard().movePiece(current, next)) {
-                    Game.getGameInstance().getDisplay().currentField.setText("");
-                    Game.getGameInstance().getDisplay().nextField.setText("");
-                    Game.getGameInstance().getDisplay().currentField.focus();
-                    Game.getGameInstance().update();
-                    return;
-                }
+            Game.getGameInstance().requestMove(current, next);
+        }
+
+
+        if (e.getComponent().equals(Game.getGameInstance().getDisplay().nextField.getTXTField())) {
+            if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE && Game.getGameInstance().getDisplay().nextField.getText().trim().equals("")) {
+                Game.getGameInstance().getDisplay().setLock();
+                Game.getGameInstance().getDisplay().currentField.focus();
+            }
+
+            if (e.isShiftDown()) {
+                Game.getGameInstance().getDisplay().setLock();
             }
         }
+
     }
 
     @Override
@@ -125,6 +147,10 @@ class KeyUpValidadte extends KeyAdapter {
                 Square selectedSquare = Game.getGameInstance().getBoard().getGrid().get(current);
                 if (!selectedSquare.isEmpty() && selectedSquare.getPiece().getColor() == Game.getGameInstance().getCurrentPlayer()) {
                     Game.getGameInstance().hightlight(new String[]{current}, Config.htmlFromColor, false);
+
+                    if (!Game.getGameInstance().getDisplay().isLock()) {
+                        Game.getGameInstance().getDisplay().nextField.focus();
+                    }
 
                     ArrayList<String> tmpList = selectedSquare.getPiece().getPossibleMoves(selectedSquare);
                     String[] possibleMoves = (tmpList != null)?new String[tmpList.size()] : new String[0];
@@ -147,8 +173,7 @@ class KeyUpValidadte extends KeyAdapter {
             }
         }
 
-
-
+        Game.getGameInstance().getDisplay().unlock();
         Game.getGameInstance().update();
     }
 }

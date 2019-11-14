@@ -15,6 +15,10 @@ public class DTextPanel extends JPanel {
 
     }
 
+    public JTextField getTXTField() {
+        return text;
+    }
+
     public DTextPanel(String textLabel, int limit, int textSize) {
         this(textLabel, limit);
         text.setColumns(textSize);

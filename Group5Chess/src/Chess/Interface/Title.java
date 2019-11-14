@@ -54,13 +54,13 @@ public class Title {
     public void validatePlayersNames() {
         if (getPlayer1().getText().equals("")) {
             getPlayer1().focus();
-            JOptionPane.showMessageDialog(null, "Enter player 1 name!");
+            JOptionPane.showMessageDialog(null, "Enter player 1 name!", "Alert!", JOptionPane.INFORMATION_MESSAGE, Config.icon);
             return;
         }
 
         if (getPlayer2().getText().equals("")) {
             getPlayer2().focus();
-            JOptionPane.showMessageDialog(null, "Enter player 2 name!");
+            JOptionPane.showMessageDialog(null, "Enter player 2 name!", "Alert!", JOptionPane.INFORMATION_MESSAGE, Config.icon);
             return;
         }
 

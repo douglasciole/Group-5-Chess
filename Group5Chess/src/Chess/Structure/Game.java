@@ -5,6 +5,7 @@ import Chess.Interface.Display;
 import Chess.Interface.Title;
 
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -119,6 +120,21 @@ public class Game {
         players.get(PieceColor.BLACK).reset();
         board.reset();
         update();
+    }
+
+    public void requestMove(String current, String next) {
+        Square selectedSquare = getBoard().getGrid().get(current);
+        if (selectedSquare.getPiece().getColor() == getCurrentPlayer()) {
+            if (getBoard().movePiece(current, next)) {
+                getDisplay().currentField.setText("");
+                getDisplay().nextField.setText("");
+                getDisplay().currentField.focus();
+                update();
+                return;
+            }
+        }else {
+            JOptionPane.showMessageDialog(null, "Select a piece acording to current player!", "Alert!", JOptionPane.INFORMATION_MESSAGE, Config.icon);
+        }
     }
 
     public static boolean validateInput(String input) {
