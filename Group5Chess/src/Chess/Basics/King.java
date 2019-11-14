@@ -23,6 +23,7 @@ public class King extends Piece {
         ArrayList<String> retList = new ArrayList<String>();
         Board board = Game.getGameInstance().getBoard();
 
+
         if (from.getRow() + 1 <= 7) { moves.add(Character.toString(Config.letters.charAt(from.getCol())) + (from.fixRow() + 1)); }
         if (from.getRow() - 1 >= 0) { moves.add(Character.toString(Config.letters.charAt(from.getCol())) + (from.fixRow() - 1)); }
         if (from.getCol() + 1 <= 7) { moves.add(Character.toString(Config.letters.charAt(from.getCol() + 1)) + from.fixRow()); }

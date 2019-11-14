@@ -74,6 +74,14 @@ public class Game {
         display.draw(board.draw() + Config.lineBreaker + drawPlayers());
     }
 
+    public void startGame() {
+        setPlayerName(PieceColor.WHITE, titleScreen.getPlayer1().getText());
+        setPlayerName(PieceColor.BLACK, titleScreen.getPlayer2().getText());
+        titleScreen.hide();
+        initBoard();
+        getDisplay().show();
+    }
+
     public Board getBoard() {
         return board;
     }

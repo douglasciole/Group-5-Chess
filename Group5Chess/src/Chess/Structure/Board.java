@@ -66,12 +66,13 @@ public class Board {
                 Game.getGameInstance().getPlayer(whoIsPlaying).capture(grid.get(to).getPiece());
             }
 
+            grid.get(from).getPiece().setMoved();
             grid.get(to).changePiece(grid.get(from).getPiece());
             grid.get(from).changePiece(null);
 
             return true;
         }else {
-            JOptionPane.showMessageDialog(null, "This moviment is not alowed, try again!");
+            JOptionPane.showMessageDialog(null, "This movement is not allowed, try again!");
             return false;
         }
     }

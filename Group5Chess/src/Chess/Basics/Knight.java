@@ -1,5 +1,7 @@
 package Chess.Basics;
 
+import Chess.Structure.Board;
+import Chess.Structure.Config;
 import Chess.Structure.Game;
 
 import java.util.ArrayList;
@@ -12,30 +14,33 @@ public class Knight extends Piece {
 
     @Override
     public boolean isValidMove(Square from, Square to) {
-        if (to.getRow() <= 8 && to.getRow() >= 0 && to.getCol() <= 8 && to.getCol() >= 0) {
-            if (to.getRow() == from.getRow() + 1 && to.getCol() == from.getCol() + 2) {
-                return true;
-            } else if (to.getRow() == from.getRow() + 1 && to.getCol() == from.getCol() - 2) {
-                return true;
-            } else if (to.getRow() == from.getRow() - 1 && to.getCol() == from.getCol() + 2) {
-                return true;
-            } else if (to.getRow() == from.getRow() - 1 && to.getCol() == from.getCol() - 2) {
-                return true;
-            } else if (to.getRow() == from.getRow() + 2 && to.getCol() == from.getCol() + 1) {
-                return true;
-            } else if (to.getRow() == from.getRow() + 2 && to.getCol() == from.getCol() - 1) {
-                return true;
-            } else if (to.getRow() == from.getRow() - 2 && to.getCol() == from.getCol() + 1) {
-                return true;
-            } else if (to.getRow() == from.getRow() - 2 && to.getCol() == from.getCol() - 1) {
-                return true;
-            }
-        }
-        return false;
+        return from.getPiece().getPossibleMoves(from).contains(Character.toString(Config.letters.charAt(to.getCol())) + to.fixRow());
     }
 
     @Override
     public ArrayList<String> getPossibleMoves(Square from) {
-        return null;
+        ArrayList<String> moves = new ArrayList<String>();
+        ArrayList<String> retList = new ArrayList<String>();
+        Board board = Game.getGameInstance().getBoard();
+
+        if (from.getRow() + 2 <= 7 && from.getCol() + 1 <= 7) { moves.add(Character.toString(Config.letters.charAt(from.getCol() + 1)) + (from.fixRow() + 2)); }
+        if (from.getRow() + 1 <= 7 && from.getCol() + 2 <= 7) { moves.add(Character.toString(Config.letters.charAt(from.getCol() + 2)) + (from.fixRow() + 1)); }
+        if (from.getRow() - 1 >= 0 && from.getCol() + 2 <= 7) { moves.add(Character.toString(Config.letters.charAt(from.getCol() + 2)) + (from.fixRow() - 1)); }
+        if (from.getRow() - 2 >= 0 && from.getCol() + 1 <= 7) { moves.add(Character.toString(Config.letters.charAt(from.getCol() + 1)) + (from.fixRow() - 2)); }
+        if (from.getRow() - 2 >= 0 && from.getCol() - 1 >= 0) { moves.add(Character.toString(Config.letters.charAt(from.getCol() - 1)) + (from.fixRow() - 2)); }
+        if (from.getRow() - 1 >= 0 && from.getCol() - 2 >= 0) { moves.add(Character.toString(Config.letters.charAt(from.getCol() - 2)) + (from.fixRow() - 1)); }
+        if (from.getRow() + 1 <= 7 && from.getCol() - 2 >= 0) { moves.add(Character.toString(Config.letters.charAt(from.getCol() - 2)) + (from.fixRow() + 1)); }
+        if (from.getRow() + 2 <= 7 && from.getCol() - 1 >= 0) { moves.add(Character.toString(Config.letters.charAt(from.getCol() - 1)) + (from.fixRow() + 2)); }
+
+        for (int i = 0; i < moves.size(); i++) {
+            if ((!board.getGrid().get(moves.get(i)).isEmpty() && board.getGrid().get(moves.get(i)).getPiece().getColor() != getColor()) ||
+                    board.getGrid().get(moves.get(i)).isEmpty()) {
+                retList.add(moves.get(i));
+            }
+        }
+
+        moves = null;
+        return retList;
     }
+
 }
