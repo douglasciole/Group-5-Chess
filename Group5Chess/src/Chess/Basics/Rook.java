@@ -25,19 +25,54 @@ public class Rook extends Piece {
 
         String pos = "";
 
-        if (getColor() == PieceColor.WHITE) {
-            for (int r = 0; r <= 7; r++) {
-                pos = Character.toString(Config.letters.charAt(from.getCol())) + (from.fixRow() + r);
-                if (board.getGrid().get(pos).isEmpty()) {
-                    moves.add(Character.toString(Config.letters.charAt(from.getCol())) + (from.fixRow() + r));
-                }
+        for (int r1 = from.fixRow(); r1 <= 7; r1++) {
+            pos = Character.toString(Config.letters.charAt(from.getCol())) + (from.fixRow() + r1);
+
+            if (board.getGrid().get(pos).isEmpty()) {
+                moves.add(Character.toString(Config.letters.charAt(from.getCol())) + (from.fixRow() + r1));
+            }else if (board.getGrid().get(pos).getPiece().getColor() != getColor()) {
+                moves.add(Character.toString(Config.letters.charAt(from.getCol())) + (from.fixRow() + r1));
+                break;
+            }else if (board.getGrid().get(pos).getPiece().getColor() == getColor()) {
+                break;
             }
         }
+        for (int r2 = from.fixRow(); r2 >= 0; r2--) {
+            pos = Character.toString(Config.letters.charAt(from.getCol())) + (from.fixRow() - r2);
 
-//            if ((to.getCol() == from.getCol() && to.getRow() != from.getRow()) ||
-//                    (to.getCol() != from.getCol() && to.getRow() == from.getRow())) {
-//                return true;
+            if (board.getGrid().get(pos).isEmpty()) {
+                moves.add(Character.toString(Config.letters.charAt(from.getCol())) + (from.fixRow() - r2));
+            }else if (board.getGrid().get(pos).getPiece().getColor() != getColor()) {
+                moves.add(Character.toString(Config.letters.charAt(from.getCol())) + (from.fixRow() - r2));
+                break;
+            }else if (board.getGrid().get(pos).getPiece().getColor() == getColor()) {
+                break;
+            }
+        }
+//        for (int c1 = from.getCol(); c1 <= 7; c1++) {
+//            pos = Character.toString(Config.letters.charAt(from.getCol() + c1)) + (from.fixRow());
+//
+//            if (board.getGrid().get(pos).isEmpty()) {
+//                moves.add(Character.toString(Config.letters.charAt(from.getCol() + c1)) + (from.fixRow()));
+//            }else if (board.getGrid().get(pos).getPiece().getColor() != getColor()) {
+//                moves.add(Character.toString(Config.letters.charAt(from.getCol() + c1)) + (from.fixRow()));
+//                break;
+//            }else if (board.getGrid().get(pos).getPiece().getColor() == getColor()) {
+//                break;
 //            }
+//        }
+//        for (int c2 = from.getCol(); c2 >= 0; c2--) {
+//            pos = Character.toString(Config.letters.charAt(from.getCol() - c2)) + (from.fixRow());
+//
+//            if (board.getGrid().get(pos).isEmpty()) {
+//                moves.add(Character.toString(Config.letters.charAt(from.getCol() - c2)) + (from.fixRow()));
+//            }else if (board.getGrid().get(pos).getPiece().getColor() != getColor()) {
+//                moves.add(Character.toString(Config.letters.charAt(from.getCol() - c2)) + (from.fixRow()));
+//                break;
+//            }else if (board.getGrid().get(pos).getPiece().getColor() == getColor()) {
+//                break;
+//            }
+//        }
 
         return moves;
     }
