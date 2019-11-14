@@ -23,7 +23,7 @@ public class Screen extends JTextPane {
         StyleConstants.setAlignment(set, StyleConstants.ALIGN_CENTER);
 
         this.setBorder(new EmptyBorder(20, 0, 20, 0));
-        this.setPreferredSize( new Dimension( Config.boardDimentions[0], 450 ) );
+        this.setPreferredSize( new Dimension( Config.boardDimentions[0], 490 ) );
         this.setHighlighter(null);
         this.setBackground(Config.screenColor);
         this.setParagraphAttributes(set, false);

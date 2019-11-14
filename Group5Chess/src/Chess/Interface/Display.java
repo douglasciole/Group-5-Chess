@@ -100,11 +100,15 @@ class KeyUpValidadte extends KeyAdapter {
         if(e.getKeyCode() == KeyEvent.VK_ENTER &&
                 current.length() > 1 && Game.validateInput(current) &&
                 next.length() > 1 && Game.validateInput(next)){
-            if (Game.getGameInstance().getBoard().movePiece(current, next)) {
-                Game.getGameInstance().getDisplay().currentField.setText("");
-                Game.getGameInstance().getDisplay().nextField.setText("");
-                Game.getGameInstance().update();
-                return;
+
+            Square selectedSquare = Game.getGameInstance().getBoard().getGrid().get(current);
+            if (selectedSquare.getPiece().getColor() == Game.getGameInstance().getCurrentPlayer()) {
+                if (Game.getGameInstance().getBoard().movePiece(current, next)) {
+                    Game.getGameInstance().getDisplay().currentField.setText("");
+                    Game.getGameInstance().getDisplay().nextField.setText("");
+                    Game.getGameInstance().update();
+                    return;
+                }
             }
         }
     }
@@ -117,7 +121,7 @@ class KeyUpValidadte extends KeyAdapter {
         if (current.length() > 1) {
             if (Game.validateInput(current)) {
                 Square selectedSquare = Game.getGameInstance().getBoard().getGrid().get(current);
-                if (!selectedSquare.isEmpty()) {
+                if (!selectedSquare.isEmpty() && selectedSquare.getPiece().getColor() == Game.getGameInstance().getCurrentPlayer()) {
                     Game.getGameInstance().hightlight(new String[]{current}, Config.htmlFromColor, false);
 
                     ArrayList<String> tmpList = selectedSquare.getPiece().getPossibleMoves(selectedSquare);
@@ -125,6 +129,8 @@ class KeyUpValidadte extends KeyAdapter {
                     if (tmpList != null)
                         possibleMoves = tmpList.toArray(possibleMoves);
 
+                    //Hightlight and Show suggestions
+                    Game.getGameInstance().setSuggestions(tmpList);
                     Game.getGameInstance().hightlight(possibleMoves, Config.htmlMovimentColor, false);
 
                     //Hightlight if TO option is a valid option

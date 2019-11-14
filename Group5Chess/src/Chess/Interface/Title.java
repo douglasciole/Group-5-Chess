@@ -102,7 +102,7 @@ public class Title {
         btnQuit.setText("< Quit");
 
         bottomContainer.add(btnQuit);
-        bottomContainer.add(btnNetwork);
+        //bottomContainer.add(btnNetwork);
         bottomContainer.add(btnStart);
         bottomContainer.add(Box.createHorizontalGlue());
 

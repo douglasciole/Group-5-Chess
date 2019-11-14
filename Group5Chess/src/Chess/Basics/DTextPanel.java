@@ -24,7 +24,6 @@ public class DTextPanel extends JPanel {
         label = new JLabel(textLabel);
         text = new JTextField();
 
-
         if (limit > 0) {
             text.setDocument(new LengthRestrictedDocument(limit));
         }

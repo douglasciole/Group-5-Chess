@@ -10,7 +10,6 @@ import java.util.Map;
  */
 public class Board {
     private Map<String, Square> grid = new Hashtable<>();
-    private PieceColor whoIsPlaying = PieceColor.WHITE;
 
     private String drawLetters() {
         return String.format(Config.letters.charAt(0)+"%s"+Config.letters.charAt(1)+"%s"+Config.letters.charAt(2)+"%s"+Config.letters.charAt(3)+"%s"+Config.letters.charAt(4)+"%s"+Config.letters.charAt(5)+"%s"+Config.letters.charAt(6)+"%s"+Config.letters.charAt(7)+"%s"+Config.lineBreaker, Config.spacing, Config.spacing, Config.spacing, Config.spacing, Config.spacing, Config.spacing, Config.spacing, Config.spacing);
@@ -24,9 +23,9 @@ public class Board {
         grid.put("a2", new Square(1, 0, new Pawn(PieceColor.WHITE)));
         grid.put("b2", new Square(1, 1, new Pawn(PieceColor.WHITE)));
         grid.put("c2", new Square(1, 2, new Pawn(PieceColor.WHITE)));
-        //grid.put("d2", new Square(1, 3, new Pawn(PieceColor.WHITE)));
+        grid.put("d2", new Square(1, 3, new Pawn(PieceColor.WHITE)));
         //grid.put("e2", new Square(1, 4, new Pawn(PieceColor.WHITE)));
-        //grid.put("f2", new Square(1, 5, new Pawn(PieceColor.WHITE)));
+        grid.put("f2", new Square(1, 5, new Pawn(PieceColor.WHITE)));
         grid.put("g2", new Square(1, 6, new Pawn(PieceColor.WHITE)));
         grid.put("h2", new Square(1, 7, new Pawn(PieceColor.WHITE)));
 
@@ -63,15 +62,17 @@ public class Board {
     public boolean movePiece(String from, String to) {
         if (grid.get(from).getPiece().isValidMove(grid.get(from), grid.get(to))) {
             if (!grid.get(to).isEmpty()) {
-                Game.getGameInstance().getPlayer(whoIsPlaying).capture(grid.get(to).getPiece());
+                Game.getGameInstance().getPlayer(Game.getGameInstance().getCurrentPlayer()).capture(grid.get(to).getPiece());
             }
 
             grid.get(to).changePiece(grid.get(from).getPiece());
             grid.get(from).changePiece(null);
 
+            Game.getGameInstance().setSuggestions(null);
+            Game.getGameInstance().togglePlayer();
             return true;
         }else {
-            JOptionPane.showMessageDialog(null, "This moviment is not alowed, try again!");
+            JOptionPane.showMessageDialog(null, "This moviment is not alowed, try again!", "Alert!", JOptionPane.INFORMATION_MESSAGE, Config.icon);
             return false;
         }
     }

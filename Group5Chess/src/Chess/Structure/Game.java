@@ -5,6 +5,7 @@ import Chess.Interface.Display;
 import Chess.Interface.Title;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,6 +13,8 @@ public class Game {
     private Board board = new Board();
     private Display display = new Display();
     private Title titleScreen = new Title();
+    private ArrayList<String> suggestions = null;
+    private PieceColor whoIsPlaying = PieceColor.WHITE;
     private static Game GAME_INSTANCE;
 
     public static Game getGameInstance() {
@@ -19,6 +22,25 @@ public class Game {
             GAME_INSTANCE = new Game();
         }
         return GAME_INSTANCE;
+    }
+
+    public void togglePlayer() {
+        if (whoIsPlaying == PieceColor.WHITE)
+            whoIsPlaying = PieceColor.BLACK;
+        else
+            whoIsPlaying = PieceColor.WHITE;
+    }
+
+    public PieceColor getCurrentPlayer() {
+        return whoIsPlaying;
+    }
+
+    public void setSuggestions(ArrayList<String> list) {
+        suggestions = list;
+    }
+
+    String getSugestedMoves() {
+        return "<div style=\"font-size: 12px;\">Suggestions: " + suggestions + "</div>";
     }
 
     private Map<PieceColor, Player> players = new HashMap<>() {
@@ -44,9 +66,9 @@ public class Game {
 
     private String drawPlayers() {
         return "<div style=\"font-size: 12px;\">" +
-                    "♔ " + players.get(PieceColor.WHITE).getName() + Config.lineBreaker +
+                ((getCurrentPlayer() == PieceColor.WHITE)?"&raquo; ":"") + "♔ " + players.get(PieceColor.WHITE).getName() + ((getCurrentPlayer() == PieceColor.WHITE)?" &laquo;":"") + Config.lineBreaker +
                     players.get(PieceColor.WHITE).getCapturedPieces() + Config.lineBreaker +
-                    "♚ " + players.get(PieceColor.BLACK).getName() + Config.lineBreaker +
+                ((getCurrentPlayer() == PieceColor.BLACK)?"&raquo; ":"") + "♚ " + players.get(PieceColor.BLACK).getName() + ((getCurrentPlayer() == PieceColor.BLACK)?" &laquo;":"") + Config.lineBreaker +
                     players.get(PieceColor.BLACK).getCapturedPieces()+
                 "</div>";
     }
@@ -71,7 +93,7 @@ public class Game {
     }
 
     public void update() {
-        display.draw(board.draw() + Config.lineBreaker + drawPlayers());
+        display.draw(board.draw() + Config.lineBreaker + drawPlayers() + Config.lineBreaker + getSugestedMoves());
     }
 
     public Board getBoard() {
