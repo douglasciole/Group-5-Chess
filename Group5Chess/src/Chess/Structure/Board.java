@@ -87,6 +87,8 @@ public class Board {
             }
         }
 
+        grid.put("e4", new Square(3, 4, new Rook(PieceColor.WHITE)));
+
         setUpWhite();
         setUpBlack();
     }
