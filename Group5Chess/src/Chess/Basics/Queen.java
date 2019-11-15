@@ -24,6 +24,7 @@ public class Queen extends Piece {
 
         String pos = "";
 
+        // ROOK MOVES
         for (int up = from.fixRow() + 1; up <= 8; up++) {
             pos = Character.toString(Config.letters.charAt(from.getCol())) + up;
 
@@ -75,9 +76,69 @@ public class Queen extends Piece {
             }
         }
 
+        // BISHOP MOVES
+        for (int i = 0; i < 8; i++) {
+            if ((from.fixRow() + 1) + i > 8 || (from.getCol() + 1) + i > 7) {
+                break;
+            }
 
-        //BISHOP
+            pos = Character.toString(Config.letters.charAt((from.getCol() + 1) + i)) + ((from.fixRow() + 1) + i);
+            if (board.getGrid().get(pos).isEmpty()) {
+                moves.add(pos);
+            }else if (board.getGrid().get(pos).getPiece().getColor() != getColor()) {
+                moves.add(pos);
+                break;
+            }else if (board.getGrid().get(pos).getPiece().getColor() == getColor()) {
+                break;
+            }
+        }
 
+        for (int i = 0; i < 8; i++) {
+            if ((from.fixRow() + 1) + i > 8 || (from.getCol() - 1) - i < 0) {
+                break;
+            }
+
+            pos = Character.toString(Config.letters.charAt((from.getCol() - 1) - i)) + ((from.fixRow() + 1) + i);
+            if (board.getGrid().get(pos).isEmpty()) {
+                moves.add(pos);
+            }else if (board.getGrid().get(pos).getPiece().getColor() != getColor()) {
+                moves.add(pos);
+                break;
+            }else if (board.getGrid().get(pos).getPiece().getColor() == getColor()) {
+                break;
+            }
+        }
+
+        for (int i = 0; i < 8; i++) {
+            if ((from.fixRow() - 1) - i < 1 || (from.getCol() + 1) + i > 7) {
+                break;
+            }
+
+            pos = Character.toString(Config.letters.charAt((from.getCol() + 1) + i)) + ((from.fixRow() - 1) - i);
+            if (board.getGrid().get(pos).isEmpty()) {
+                moves.add(pos);
+            }else if (board.getGrid().get(pos).getPiece().getColor() != getColor()) {
+                moves.add(pos);
+                break;
+            }else if (board.getGrid().get(pos).getPiece().getColor() == getColor()) {
+                break;
+            }
+        }
+
+        for (int i = 0; i < 8; i++) {
+            if ((from.fixRow() - 1) - i < 1 || (from.getCol() - 1) - i < 0) {
+                break;
+            }
+            pos = Character.toString(Config.letters.charAt((from.getCol() - 1) - i)) + ((from.fixRow() - 1) - i);
+            if (board.getGrid().get(pos).isEmpty()) {
+                moves.add(pos);
+            }else if (board.getGrid().get(pos).getPiece().getColor() != getColor()) {
+                moves.add(pos);
+                break;
+            }else if (board.getGrid().get(pos).getPiece().getColor() == getColor()) {
+                break;
+            }
+        }
 
         return moves;
     }
