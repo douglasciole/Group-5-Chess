@@ -1,5 +1,6 @@
 package Chess.Structure;
 import Chess.Basics.*;
+import Chess.Interface.PromotionScreen;
 
 import javax.swing.*;
 import java.util.Hashtable;
@@ -68,6 +69,11 @@ public class Board {
             grid.get(from).getPiece().setMoved();
             grid.get(to).changePiece(grid.get(from).getPiece());
             grid.get(from).changePiece(null);
+
+            if ((grid.get(to).getPiece().getClass().getName().equals(Pawn.getClassName()) && grid.get(to).getPiece().getColor() == PieceColor.WHITE && grid.get(to).fixRow() == 8) ||
+                    (grid.get(to).getPiece().getClass().getName().equals(Pawn.getClassName()) && grid.get(to).getPiece().getColor() == PieceColor.BLACK && grid.get(to).fixRow() == 1)) {
+                new PromotionScreen(to);
+            }
 
             Game.getGameInstance().setSuggestions(null);
             Game.getGameInstance().togglePlayer();

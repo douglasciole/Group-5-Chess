@@ -74,6 +74,10 @@ public class Pawn extends Piece {
         return moves;
     }
 
+    public static String getClassName() {
+        return "Chess.Basics.Pawn";
+    }
+
     public Pawn(PieceColor color) {
         super(new String[] {"♙", "♟"}, color);
     }
