@@ -1,5 +1,6 @@
 package Chess.Basics;
 
+import Chess.Structure.Board;
 import Chess.Structure.Config;
 import Chess.Structure.Game;
 
@@ -14,77 +15,66 @@ public class Bishop extends Piece{
 
     @Override
     public boolean isValidMove(Square from, Square to) {
-        Map<String, Square> grid = Game.getGameInstance().getBoard().getGrid();
-
-        if (to.getRow() <= 8 && to.getRow() >= 0 && to.getCol() <= 8 && to.getCol() >= 0) {
-            if (Math.abs(to.getCol() - from.getCol()) == Math.abs(to.getRow() - from.getRow())) {
-                int colDir = to.getCol() - from.getCol();
-                int rowDir = to.getRow() - from.getRow();
-                if (colDir > 0 && rowDir > 0) {
-                    for (int r = 1; r <= rowDir; r++) {
-                        for (int c = 1; c <= colDir; c++) {
-                            if (!grid.get(Config.letters.charAt(c)+r).isEmpty()) {
-                                if ((rowDir == r && colDir == c)) {
-                                    if (from.getPiece().isWhite() != to.getPiece().isWhite()) {
-                                        return true;
-                                    }
-                                } else { //it is not the last Square
-                                    return false;
-                                }
-                            }
-                        }
-                    }
-                } // else if (colDir > 0 && rowDir > 0) {
-//                    for (int r = 1; r <= rowDir; r++) {
-//                        for (int c = 1; c <= colDir; c++) {
-//                            if (!grid.get(Config.letters.charAt(c) + r).isEmpty()) {
-//                                if ((rowDir == r && colDir == c)) {
-//                                    if (from.getPiece().isWhite() != to.getPiece().isWhite()) {
-//                                        return true;
-//                                    }
-//                                } else { //it is not the last Square
-//                                    return false;
-//                                }
-//                            }
-//                        }
-//                    }
-//                } else if (colDir > 0 && rowDir > 0) {
-//                    for (int r = 1; r <= rowDir; r++) {
-//                        for (int c = 1; c <= colDir; c++) {
-//                            if (!grid.get(Config.letters.charAt(c) + r).isEmpty()) {
-//                                if ((rowDir == r && colDir == c)) {
-//                                    if (from.getPiece().isWhite() != to.getPiece().isWhite()) {
-//                                        return true;
-//                                    }
-//                                } else { //it is not the last Square
-//                                    return false;
-//                                }
-//                            }
-//                        }
-//                    }
-//                }else if (colDir > 0 && rowDir > 0) {
-//                    for (int r = 1; r <= rowDir; r++) {
-//                        for (int c = 1; c <= colDir; c++) {
-//                            if (!grid.get(Config.letters.charAt(c) + r).isEmpty()) {
-//                                if ((rowDir == r && colDir == c)) {
-//                                    if (from.getPiece().isWhite() != to.getPiece().isWhite()) {
-//                                        return true;
-//                                    }
-//                                } else { //it is not the last Square
-//                                    return false;
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-                return true;
-            }
-        }
-        return false;
+        return from.getPiece().getPossibleMoves(from).contains(Character.toString(Config.letters.charAt(to.getCol())) + to.fixRow());
     }
 
     @Override
     public ArrayList<String> getPossibleMoves(Square from) {
-        return null;
+        ArrayList<String> moves = new ArrayList<String>();
+        Board board = Game.getGameInstance().getBoard();
+
+        String pos = "";
+
+        for (int i = 0; i < 8; i++) {
+            if ((from.fixRow() + 1) + i > 7 || (from.getCol() + 1) + i > 7) {
+                break;
+            }
+
+            pos = Character.toString(Config.letters.charAt((from.getCol() + 1) + i)) + (from.fixRow() + 1 + i);
+            if (board.getGrid().get(pos).isEmpty()) {
+                moves.add(pos);
+            }else if (board.getGrid().get(pos).getPiece().getColor() != getColor()) {
+                moves.add(pos);
+                break;
+            }else if (board.getGrid().get(pos).getPiece().getColor() == getColor()) {
+                break;
+            }
+        }
+
+        for (int i = 0; i < 8; i++) {
+            if ((from.fixRow() + 1) + i > 7 || (from.getCol() - 1) - i < 0) {
+                break;
+            }
+
+            pos = Character.toString(Config.letters.charAt((from.getCol() - 1) - i)) + (from.fixRow() + 1 + i);
+            if (board.getGrid().get(pos).isEmpty()) {
+                moves.add(pos);
+            }else if (board.getGrid().get(pos).getPiece().getColor() != getColor()) {
+                moves.add(pos);
+                break;
+            }else if (board.getGrid().get(pos).getPiece().getColor() == getColor()) {
+                break;
+            }
+        }
+
+//        for (int i = 0; i < 8; i++) {
+//            if ((from.fixRow() + 1) + i > 7 || (from.getCol() - 1) - i < 0) {
+//                break;
+//            }
+//
+//            pos = Character.toString(Config.letters.charAt((from.getCol() - 1) - i)) + (from.fixRow() + 1 + i);
+//            moves.add(pos);
+//        }
+//
+//        for (int i = 0; i < 8; i++) {
+//            if ((from.fixRow() + 1) + i > 7 || (from.getCol() - 1) - i < 0) {
+//                break;
+//            }
+//
+//            pos = Character.toString(Config.letters.charAt((from.getCol() - 1) - i)) + (from.fixRow() + 1 + i);
+//            moves.add(pos);
+//        }
+
+        return moves;
     }
 }

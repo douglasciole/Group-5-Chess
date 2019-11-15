@@ -1,5 +1,7 @@
 package Chess.Basics;
 
+import Chess.Structure.Board;
+import Chess.Structure.Config;
 import Chess.Structure.Game;
 
 import java.util.ArrayList;
@@ -12,20 +14,71 @@ public class Queen extends Piece {
 
     @Override
     public boolean isValidMove(Square from, Square to) {
-        Game game = Game.getGameInstance();
-        if (to.getRow() <= 8 && to.getRow() >= 0 && to.getCol() <= 8 && to.getCol() >= 0) {
-            if ((to.getCol() == from.getCol() && to.getRow() != from.getRow()) ||
-                    (to.getCol() != from.getCol() && to.getRow() == from.getRow())) {
-                return true;
-            } else if (Math.abs(to.getCol() - from.getCol()) == Math.abs(to.getRow() - from.getRow())) {
-                return true;
-            }
-        }
-        return false;
+        return from.getPiece().getPossibleMoves(from).contains(Character.toString(Config.letters.charAt(to.getCol())) + to.fixRow());
     }
 
     @Override
     public ArrayList<String> getPossibleMoves(Square from) {
-        return null;
+        ArrayList<String> moves = new ArrayList<String>();
+        Board board = Game.getGameInstance().getBoard();
+
+        String pos = "";
+
+        for (int up = from.fixRow() + 1; up <= 8; up++) {
+            pos = Character.toString(Config.letters.charAt(from.getCol())) + up;
+
+            if (board.getGrid().get(pos).isEmpty()) {
+                moves.add(pos);
+            }else if (board.getGrid().get(pos).getPiece().getColor() != getColor()) {
+                moves.add(pos);
+                break;
+            }else if (board.getGrid().get(pos).getPiece().getColor() == getColor()) {
+                break;
+            }
+        }
+        for (int down = from.getRow(); down > 0; down--) {
+            pos = Character.toString(Config.letters.charAt(from.getCol())) + down;
+
+            if (board.getGrid().get(pos).isEmpty()) {
+                moves.add(pos);
+            }else if (board.getGrid().get(pos).getPiece().getColor() != getColor()) {
+                moves.add(pos);
+                break;
+            }else if (board.getGrid().get(pos).getPiece().getColor() == getColor()) {
+                break;
+            }
+        }
+
+        for (int left = from.getCol() - 1; left >= 0; left--) {
+            pos = Character.toString(Config.letters.charAt(left)) + from.fixRow();
+
+            if (board.getGrid().get(pos).isEmpty()) {
+                moves.add(pos);
+            }else if (board.getGrid().get(pos).getPiece().getColor() != getColor()) {
+                moves.add(pos);
+                break;
+            }else if (board.getGrid().get(pos).getPiece().getColor() == getColor()) {
+                break;
+            }
+        }
+
+        for (int right = from.getCol() + 1; right <= 7; right++) {
+            pos = Character.toString(Config.letters.charAt(right)) + from.fixRow();
+
+            if (board.getGrid().get(pos).isEmpty()) {
+                moves.add(pos);
+            }else if (board.getGrid().get(pos).getPiece().getColor() != getColor()) {
+                moves.add(pos);
+                break;
+            }else if (board.getGrid().get(pos).getPiece().getColor() == getColor()) {
+                break;
+            }
+        }
+
+
+        //BISHOP
+
+
+        return moves;
     }
 }
