@@ -13,7 +13,12 @@ public class Board {
     private Map<String, Square> grid = new Hashtable<>();
 
     private String drawLetters() {
-        return String.format(Config.letters.charAt(0)+"%s"+Config.letters.charAt(1)+"%s"+Config.letters.charAt(2)+"%s"+Config.letters.charAt(3)+"%s"+Config.letters.charAt(4)+"%s"+Config.letters.charAt(5)+"%s"+Config.letters.charAt(6)+"%s"+Config.letters.charAt(7)+"%s"+Config.lineBreaker, Config.spacing, Config.spacing, Config.spacing, Config.spacing, Config.spacing, Config.spacing, Config.spacing, Config.spacing);
+        return String.format(Config.letters.charAt(0)+"%s"+Config.letters.charAt(1)+
+                "%s"+Config.letters.charAt(2)+"%s"+Config.letters.charAt(3)+
+                "%s"+Config.letters.charAt(4)+"%s"+Config.letters.charAt(5)+
+                "%s"+Config.letters.charAt(6)+"%s"+Config.letters.charAt(7)+
+                "%s"+Config.lineBreaker, Config.spacing, Config.spacing, Config.spacing,
+                Config.spacing, Config.spacing, Config.spacing, Config.spacing, Config.spacing);
     }
 
     private String drawNumbers(int i) {
@@ -31,12 +36,12 @@ public class Board {
         //grid.put("h2", new Square(1, 7, new Pawn(PieceColor.WHITE)));
 
         grid.put("a1", new Square(0, 0, new Rook(PieceColor.WHITE)));
-        grid.put("b1", new Square(0, 1, new Knight(PieceColor.WHITE)));
-        grid.put("c1", new Square(0, 2, new Bishop(PieceColor.WHITE)));
-        grid.put("d1", new Square(0, 3, new Queen(PieceColor.WHITE)));
+        //grid.put("b1", new Square(0, 1, new Knight(PieceColor.WHITE)));
+        //grid.put("c1", new Square(0, 2, new Bishop(PieceColor.WHITE)));
+        //grid.put("d1", new Square(0, 3, new Queen(PieceColor.WHITE)));
         grid.put("e1", new Square(0, 4, new King(PieceColor.WHITE)));
-        grid.put("f1", new Square(0, 5, new Bishop(PieceColor.WHITE)));
-        grid.put("g1", new Square(0, 6, new Knight(PieceColor.WHITE)));
+        //grid.put("f1", new Square(0, 5, new Bishop(PieceColor.WHITE)));
+        //grid.put("g1", new Square(0, 6, new Knight(PieceColor.WHITE)));
         grid.put("h1", new Square(0, 7, new Rook(PieceColor.WHITE)));
     }
 
@@ -51,24 +56,83 @@ public class Board {
         grid.put("h7", new Square(6, 7, new Pawn(PieceColor.BLACK)));
 
         grid.put("a8", new Square(7, 0, new Rook(PieceColor.BLACK)));
-        grid.put("b8", new Square(7, 1, new Knight(PieceColor.BLACK)));
-        grid.put("c8", new Square(7, 2, new Bishop(PieceColor.BLACK)));
-        grid.put("d8", new Square(7, 3, new Queen(PieceColor.BLACK)));
+        //grid.put("b8", new Square(7, 1, new Knight(PieceColor.BLACK)));
+        //grid.put("c8", new Square(7, 2, new Bishop(PieceColor.BLACK)));
+        //grid.put("d8", new Square(7, 3, new Queen(PieceColor.BLACK)));
         grid.put("e8", new Square(7, 4, new King(PieceColor.BLACK)));
-        grid.put("f8", new Square(7, 5, new Bishop(PieceColor.BLACK)));
-        grid.put("g8", new Square(7, 6, new Knight(PieceColor.BLACK)));
+        //grid.put("f8", new Square(7, 5, new Bishop(PieceColor.BLACK)));
+        //grid.put("g8", new Square(7, 6, new Knight(PieceColor.BLACK)));
         grid.put("h8", new Square(7, 7, new Rook(PieceColor.BLACK)));
     }
 
     public boolean movePiece(String from, String to) {
-        if (grid.get(from).getPiece().isValidMove(grid.get(from), grid.get(to))) {
+        return movePiece(from, to, false);
+    }
+
+    public boolean movePiece(String from, String to, boolean ignorePath) {
+        String enPos = "";
+        if (to.length() > 2) {
+            enPos = to.substring(3, 5);
+            System.out.println(enPos);
+            to = to.substring(0, 2);
+        }
+
+        if (ignorePath || grid.get(from).getPiece().isValidMove(grid.get(from), grid.get(to))) {
             if (!grid.get(to).isEmpty()) {
                 Game.getGameInstance().getPlayer(Game.getGameInstance().getCurrentPlayer()).capture(grid.get(to).getPiece());
+            }else if (!enPos.equals("")) {
+                Game.getGameInstance().getPlayer(Game.getGameInstance().getCurrentPlayer()).capture(grid.get(enPos).getPiece());
+                grid.get(enPos).changePiece(null);
             }
 
             grid.get(from).getPiece().setMoved();
             grid.get(to).changePiece(grid.get(from).getPiece());
             grid.get(from).changePiece(null);
+
+            if (grid.get(to).getPiece().getClass().getName().equals(King.getClassName())) {
+                if (Math.abs(grid.get(to).getCol() - grid.get(from).getCol()) > 1) {
+                    if (to.equals("c1")) {
+                        movePiece("a1", "d1", true);
+
+                    }else if (to.equals("g1")) {
+                        movePiece("h1", "f1", true);
+
+                    }else if (to.equals("c8")) {
+                        movePiece("a8", "d8", true);
+
+                    }else if (to.equals("g8")) {
+                        movePiece("h8", "f8", true);
+
+                    }
+                }
+            }
+
+            if (grid.get(to).getPiece().getClass().getName().equals(Pawn.getClassName())) {
+                Square movedPawn = grid.get(to);
+                if (movedPawn.getPiece().getColor() == PieceColor.WHITE &&
+                        movedPawn.fixRow() == 4) {
+                    if (movedPawn.getCol() - 1 >= 0)
+                    {
+                        String pos = Character.toString(Config.letters.charAt(movedPawn.getCol() - 1)) + movedPawn.fixRow();
+                        if (!grid.get(pos).isEmpty() &&
+                                grid.get(pos).getPiece().getColor() != movedPawn.getPiece().getColor() &&
+                                grid.get(pos).getPiece().getClass().getName().equals(Pawn.getClassName()))
+                        {
+                            ((Pawn) grid.get(pos).getPiece()).setEnPassant(Character.toString(Config.letters.charAt(movedPawn.getCol())) + movedPawn.fixRow());
+                        }
+
+                    }
+                    if (movedPawn.getCol() + 1 <= 7) {
+                        String pos = Character.toString(Config.letters.charAt(movedPawn.getCol() + 1)) + movedPawn.fixRow();
+                        if (!grid.get(pos).isEmpty() &&
+                                grid.get(pos).getPiece().getColor() != movedPawn.getPiece().getColor() &&
+                                grid.get(pos).getPiece().getClass().getName().equals(Pawn.getClassName())) {
+                            ((Pawn) grid.get(pos).getPiece()).setEnPassant(Character.toString(Config.letters.charAt(movedPawn.getCol())) + movedPawn.fixRow());
+                        }
+
+                    }
+                }
+            }
 
             if ((grid.get(to).getPiece().getClass().getName().equals(Pawn.getClassName()) && grid.get(to).getPiece().getColor() == PieceColor.WHITE && grid.get(to).fixRow() == 8) ||
                     (grid.get(to).getPiece().getClass().getName().equals(Pawn.getClassName()) && grid.get(to).getPiece().getColor() == PieceColor.BLACK && grid.get(to).fixRow() == 1)) {
