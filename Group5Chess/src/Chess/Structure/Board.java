@@ -89,6 +89,9 @@ public class Board {
                 Game.getGameInstance().getPlayer(Game.getGameInstance().getCurrentPlayer()).capture(grid.get(to).getPiece());
                 if (grid.get(to).getPiece().getClass() == King.class) {
                     JOptionPane.showMessageDialog(null, Game.getGameInstance().getCurrentPlayer() + " WIN!!", "", JOptionPane.INFORMATION_MESSAGE, Config.icon);
+                    Game.getGameInstance().getDisplay().hide();
+                    Game.getGameInstance().getTitleScreen().show();
+                    Game.getGameInstance().reset();
                     return true;
                 }
             }
