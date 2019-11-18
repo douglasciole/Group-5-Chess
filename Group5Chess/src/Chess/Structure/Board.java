@@ -87,6 +87,10 @@ public class Board {
         if (ignorePath || grid.get(from).getPiece().isValidMove(grid.get(from), grid.get(to))) {
             if (!grid.get(to).isEmpty()) {
                 Game.getGameInstance().getPlayer(Game.getGameInstance().getCurrentPlayer()).capture(grid.get(to).getPiece());
+                if (grid.get(to).getPiece().getClass() == King.class) {
+                    JOptionPane.showMessageDialog(null, Game.getGameInstance().getCurrentPlayer() + " WIN!!", "", JOptionPane.INFORMATION_MESSAGE, Config.icon);
+                    return true;
+                }
             }
 
 //            if (grid.get(to).isEmpty() && !enPos.equals("")) {
