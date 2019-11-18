@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class Config {
     public static final String gameTitle = "Group 5 Chess";
-    public static final boolean adminMode = true;
+    public static final boolean adminMode = false;
 
     public static final String letters = "abcdefgh";
     public static final String spacing = "  ";

@@ -43,7 +43,7 @@ public class King extends Piece {
         //TODO: Verify if there is a piece before chechking if it is first moviment
         if (getColor() == PieceColor.WHITE) {
             if (isFirstMove() &&
-                    board.getGrid().get("a1").getPiece().isFirstMove() &&
+                    (!board.getGrid().get("a1").isEmpty() && board.getGrid().get("a1").getPiece().isFirstMove()) &&
                     board.getGrid().get("b1").isEmpty() &&
                     board.getGrid().get("c1").isEmpty() &&
                     board.getGrid().get("d1").isEmpty())
@@ -51,7 +51,7 @@ public class King extends Piece {
                 retList.add("c1");
             }
             if (isFirstMove() &&
-                    board.getGrid().get("h1").getPiece().isFirstMove() &&
+                    (!board.getGrid().get("h1").isEmpty() && board.getGrid().get("h1").getPiece().isFirstMove()) &&
                     board.getGrid().get("g1").isEmpty() &&
                     board.getGrid().get("f1").isEmpty())
             {
@@ -59,7 +59,7 @@ public class King extends Piece {
             }
         }else {
             if (isFirstMove() &&
-                    board.getGrid().get("a8").getPiece().isFirstMove() &&
+                    (!board.getGrid().get("a8").isEmpty() && board.getGrid().get("a8").getPiece().isFirstMove()) &&
                     board.getGrid().get("b8").isEmpty() &&
                     board.getGrid().get("c8").isEmpty() &&
                     board.getGrid().get("d8").isEmpty())
@@ -67,7 +67,7 @@ public class King extends Piece {
                 retList.add("c8");
             }
             if (isFirstMove() &&
-                    board.getGrid().get("h8").getPiece().isFirstMove() &&
+                    (!board.getGrid().get("h8").isEmpty() && board.getGrid().get("h8").getPiece().isFirstMove()) &&
                     board.getGrid().get("g8").isEmpty() &&
                     board.getGrid().get("f8").isEmpty())
             {

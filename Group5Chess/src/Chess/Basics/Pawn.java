@@ -27,12 +27,6 @@ public class Pawn extends Piece {
     @Override
     public boolean isValidMove(Square from, Square to) {
         ArrayList<String> pMoves = from.getPiece().getPossibleMoves(from);
-        for (int i = 0; i < pMoves.size(); i++) {
-            if (pMoves.get(i).length() > 2) {
-                pMoves.set(i, pMoves.get(i).substring(0, 2));
-            }
-        }
-
         return pMoves.contains(Character.toString(Config.letters.charAt(to.getCol())) + to.fixRow());
     }
 
@@ -64,10 +58,9 @@ public class Pawn extends Piece {
                     moves.add(Character.toString(Config.letters.charAt(from.getCol() - 1)) + (from.fixRow() + 1));
                 }
             }
-            if (!this.getEnPassant().equals("")) {
-                String enPos = Character.toString(getEnPassant().charAt(0)) + (Integer.parseInt(Character.toString(getEnPassant().charAt(1))) + 1);
-                moves.add(enPos+"["+getEnPassant()+"]");
-            }
+            /*if (!this.getEnPassant().equals("")) {
+                moves.add(getEnPassant().substring(3, 5));
+            }*/
         } else {
             pos = Character.toString(Config.letters.charAt(from.getCol())) + (from.fixRow() - 1);
             if (from.getRow() - 1 >= 0 && (board.getGrid().get(pos).isEmpty())) {
@@ -90,10 +83,9 @@ public class Pawn extends Piece {
                 }
             }
 
-            if (!this.getEnPassant().equals("")) {
-                String enPos = Character.toString(getEnPassant().charAt(0)) + (Integer.parseInt(Character.toString(getEnPassant().charAt(1))) - 1);
-                moves.add(enPos+"["+getEnPassant()+"]");
-            }
+            /*if (!this.getEnPassant().equals("")) {
+                moves.add(getEnPassant().substring(3, 5));
+            }*/
         }
 
         return moves;

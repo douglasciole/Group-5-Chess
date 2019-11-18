@@ -134,7 +134,6 @@ class KeyUpValidadte extends KeyAdapter {
                 Game.getGameInstance().getDisplay().setLock();
             }
         }
-
     }
 
     @Override
@@ -162,8 +161,7 @@ class KeyUpValidadte extends KeyAdapter {
                     Game.getGameInstance().hightlight(possibleMoves, Config.htmlMovimentColor, false);
 
                     //Hightlight if TO option is a valid option
-                    if (next.length() > 1 &&
-                            !current.equals(next)) {
+                    if (next.length() > 1 && !current.equals(next)) {
                         if (Game.validateInput(next) && tmpList != null && tmpList.contains(next)) {
                             Game.getGameInstance().hightlight(new String[]{next}, Config.htmlToColor, false);
                         }

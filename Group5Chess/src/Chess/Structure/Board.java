@@ -26,22 +26,22 @@ public class Board {
     }
 
     private void setUpWhite() {
-        //grid.put("a2", new Square(1, 0, new Pawn(PieceColor.WHITE)));
+        grid.put("a2", new Square(1, 0, new Pawn(PieceColor.WHITE)));
         grid.put("b2", new Square(1, 1, new Pawn(PieceColor.WHITE)));
         grid.put("c2", new Square(1, 2, new Pawn(PieceColor.WHITE)));
         grid.put("d2", new Square(1, 3, new Pawn(PieceColor.WHITE)));
         grid.put("e2", new Square(1, 4, new Pawn(PieceColor.WHITE)));
         grid.put("f2", new Square(1, 5, new Pawn(PieceColor.WHITE)));
         grid.put("g2", new Square(1, 6, new Pawn(PieceColor.WHITE)));
-        //grid.put("h2", new Square(1, 7, new Pawn(PieceColor.WHITE)));
+        grid.put("h2", new Square(1, 7, new Pawn(PieceColor.WHITE)));
 
         grid.put("a1", new Square(0, 0, new Rook(PieceColor.WHITE)));
-        //grid.put("b1", new Square(0, 1, new Knight(PieceColor.WHITE)));
-        //grid.put("c1", new Square(0, 2, new Bishop(PieceColor.WHITE)));
-        //grid.put("d1", new Square(0, 3, new Queen(PieceColor.WHITE)));
+        grid.put("b1", new Square(0, 1, new Knight(PieceColor.WHITE)));
+        grid.put("c1", new Square(0, 2, new Bishop(PieceColor.WHITE)));
+        grid.put("d1", new Square(0, 3, new Queen(PieceColor.WHITE)));
         grid.put("e1", new Square(0, 4, new King(PieceColor.WHITE)));
-        //grid.put("f1", new Square(0, 5, new Bishop(PieceColor.WHITE)));
-        //grid.put("g1", new Square(0, 6, new Knight(PieceColor.WHITE)));
+        grid.put("f1", new Square(0, 5, new Bishop(PieceColor.WHITE)));
+        grid.put("g1", new Square(0, 6, new Knight(PieceColor.WHITE)));
         grid.put("h1", new Square(0, 7, new Rook(PieceColor.WHITE)));
     }
 
@@ -56,12 +56,12 @@ public class Board {
         grid.put("h7", new Square(6, 7, new Pawn(PieceColor.BLACK)));
 
         grid.put("a8", new Square(7, 0, new Rook(PieceColor.BLACK)));
-        //grid.put("b8", new Square(7, 1, new Knight(PieceColor.BLACK)));
-        //grid.put("c8", new Square(7, 2, new Bishop(PieceColor.BLACK)));
-        //grid.put("d8", new Square(7, 3, new Queen(PieceColor.BLACK)));
+        grid.put("b8", new Square(7, 1, new Knight(PieceColor.BLACK)));
+        grid.put("c8", new Square(7, 2, new Bishop(PieceColor.BLACK)));
+        grid.put("d8", new Square(7, 3, new Queen(PieceColor.BLACK)));
         grid.put("e8", new Square(7, 4, new King(PieceColor.BLACK)));
-        //grid.put("f8", new Square(7, 5, new Bishop(PieceColor.BLACK)));
-        //grid.put("g8", new Square(7, 6, new Knight(PieceColor.BLACK)));
+        grid.put("f8", new Square(7, 5, new Bishop(PieceColor.BLACK)));
+        grid.put("g8", new Square(7, 6, new Knight(PieceColor.BLACK)));
         grid.put("h8", new Square(7, 7, new Rook(PieceColor.BLACK)));
     }
 
@@ -70,20 +70,29 @@ public class Board {
     }
 
     public boolean movePiece(String from, String to, boolean ignorePath) {
-        String enPos = "";
-        if (to.length() > 2) {
-            enPos = to.substring(3, 5);
-            System.out.println(enPos);
-            to = to.substring(0, 2);
-        }
+//        System.out.println(to);
+//        String enPos = "";
+//        String enCap = "";
+//        if (grid.get(from).getPiece().getClass().getName().equals(Pawn.getClassName()) &&
+//                !((Pawn) grid.get(from).getPiece()).getEnPassant().equals(""))
+//        {
+//            enPos = ((Pawn) grid.get(from).getPiece()).getEnPassant().substring(0, 2);
+//            enCap = ((Pawn) grid.get(from).getPiece()).getEnPassant().substring(3, 5);
+//
+//            System.out.println(enPos);
+//            System.out.println(enCap);
+//            System.out.println(to);
+//        }
 
         if (ignorePath || grid.get(from).getPiece().isValidMove(grid.get(from), grid.get(to))) {
             if (!grid.get(to).isEmpty()) {
                 Game.getGameInstance().getPlayer(Game.getGameInstance().getCurrentPlayer()).capture(grid.get(to).getPiece());
-            }else if (!enPos.equals("")) {
-                Game.getGameInstance().getPlayer(Game.getGameInstance().getCurrentPlayer()).capture(grid.get(enPos).getPiece());
-                grid.get(enPos).changePiece(null);
             }
+
+//            if (grid.get(to).isEmpty() && !enPos.equals("")) {
+//                Game.getGameInstance().getPlayer(Game.getGameInstance().getCurrentPlayer()).capture(grid.get(enPos).getPiece());
+//                grid.get(enPos).changePiece(null);
+//            }
 
             grid.get(from).getPiece().setMoved();
             grid.get(to).changePiece(grid.get(from).getPiece());
@@ -118,7 +127,7 @@ public class Board {
                                 grid.get(pos).getPiece().getColor() != movedPawn.getPiece().getColor() &&
                                 grid.get(pos).getPiece().getClass().getName().equals(Pawn.getClassName()))
                         {
-                            ((Pawn) grid.get(pos).getPiece()).setEnPassant(Character.toString(Config.letters.charAt(movedPawn.getCol())) + movedPawn.fixRow());
+                            ((Pawn) grid.get(pos).getPiece()).setEnPassant(Character.toString(Config.letters.charAt(movedPawn.getCol())) + (movedPawn.fixRow() - 1)+"["+Character.toString(Config.letters.charAt(movedPawn.getCol())) + movedPawn.fixRow()+"]");
                         }
 
                     }

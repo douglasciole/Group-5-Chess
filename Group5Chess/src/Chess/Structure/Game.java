@@ -84,10 +84,6 @@ public class Game {
 
     public void hightlight(String[] list, String color, boolean update) {
         for (int i = 0; i < list.length; i++) {
-            if (list[i].length() > 2) {
-                list[i] = list[i].substring(0, 2);
-            }
-
             if (board.getGrid().containsKey(list[i])) {
                 board.getGrid().get(list[i]).highlight(color);
             }
