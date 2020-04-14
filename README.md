@@ -6,7 +6,7 @@
 
 All code is MIT License, except for all third-party assets are not.
 
-# Group-5-Chess
+# Java-Visual-Chess
   - 
 
 # How to play
