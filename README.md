@@ -6,7 +6,7 @@
 
 All code is MIT License, except for all third-party assets are not.
 
-# Java-Visual-Chess
+# Java Visual Chess
   - 
 
 # How to play
